@@ -1,0 +1,27 @@
+.tag {
+  display: flex;
+  align-items: center;
+
+  border: 1px solid var(--app-border-color);
+  border-radius: .25rem;
+  padding: .125rem .25rem;
+
+  gap: .5rem;
+
+  &:not([disabled]) {
+    cursor: pointer;
+  }
+
+  &:global(.active) {
+    background-color: attr(data-color type(#{'<color>'}), #ddd);
+  }
+
+  &:global(.dark) {
+    color: #fff;
+  }
+
+  :global(.sidebar-tag-icon) {
+    font-size: 1.1em;
+    margin-bottom: -.1em;
+  }
+}

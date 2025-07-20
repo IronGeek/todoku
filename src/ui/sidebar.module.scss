@@ -1,0 +1,42 @@
+.sidebar {
+  position: sticky;
+  top: 0;
+
+  width: var(--app-sidebar-width, 15rem);
+  height: 100vh;
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+
+  border-right: 1px solid var(--app-border-color);
+  transition: width .125s ease-in;
+
+  z-index: 1;
+
+  &:global(.sidebar-hidden) {
+    width: 0;
+  }
+
+  :global(.sidebar-header) {
+    display: flex;
+    align-items: center;
+
+    font-size: 1.375rem;
+    padding: 1rem;
+
+    height: var(--app-navbar-height, 4rem);
+  }
+
+  :global(.sidebar-content) {
+    padding: 1rem 0;
+  }
+
+  :global(.sidebar-footer) {
+    margin-top: auto;
+  }
+
+  :global(.sidebar-toggler) {
+    margin-left: auto;
+  }
+}

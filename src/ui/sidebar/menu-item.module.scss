@@ -1,0 +1,16 @@
+.item {
+  display: flex;
+  align-items: center;
+
+  gap: .5rem;
+  padding: 0 1rem;
+
+  :global(.sidebar-menu-icon) {
+    font-size: 1.1em;
+    margin-bottom: -.1em;
+  }
+
+  &:global(.active) {
+    border-right: .25rem solid var(--app-border-color);
+  }
+}
