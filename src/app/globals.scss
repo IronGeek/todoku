@@ -1,0 +1,64 @@
+@import 'tailwindcss/index.css';
+
+@theme inline {
+  --font-sans: var(--font-andika);
+  --default-font-family: var(--font-sans);
+}
+
+html { height:100% }
+body { min-height:100% }
+
+:root {
+  --app-sidebar-width: 15rem;
+  --app-navbar-height: 4rem;
+  --app-footer-height: 5rem;
+
+  --app-border-color: #ddd;
+  --app-primary-color: #222;
+  --app-danger-color: #903;
+}
+
+
+button, a[href] {
+  &.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+    gap: .5rem;
+
+    cursor: pointer;
+
+    border-radius: .5rem;
+    border: 1px solid #22222214;
+    padding: .375rem 1rem .5rem 1rem;
+
+    &> svg {
+      margin-bottom: -.125rem;
+    }
+
+    &.primary {
+      background-color: var(--app-primary-color);
+      color: #fff;
+
+      &:hover {
+        background-color: #383838;
+      }
+    }
+
+    &.danger {
+      background-color: var(--app-danger-color);
+      color: #fff;
+
+      &:hover {
+        background-color: #b40f46;
+      }
+    }
+
+    &.secondary {
+      &:hover {
+        background-color: rgba(34, 34, 34, 0.082);
+      }
+    }
+  }
+}
