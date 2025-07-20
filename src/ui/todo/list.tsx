@@ -1,7 +1,7 @@
 'use client';
 
 import clsx from "clsx";
-import { isToday } from "date-fns";
+import { isThisWeek, isToday, isTomorrow } from "date-fns";
 
 import { useAppSelector } from "@/state/hook";
 import { TodoItem } from "@/ui/todo/item";
@@ -14,6 +14,12 @@ import styles from './list.module.scss';
 const TodoFilters = Object.freeze({
   today: (todo: Todo): boolean => {
     return todo.due ? isToday(new Date(todo.due)) : false
+  },
+  tomorrow: (todo: Todo): boolean => {
+    return todo.due ? isTomorrow(new Date(todo.due)) : false
+  },
+  ['this-week']: (todo: Todo): boolean => {
+    return todo.due ? isThisWeek(new Date(todo.due)) : false
   }
 });
 

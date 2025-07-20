@@ -11,6 +11,7 @@ import type { UrlObject } from 'url';
 
 type SidebarMenuItemProps = ComponentProps<'li'> & {
   icon?: ReactNode
+  badge?: ReactNode
   text?: string
   href?: string | UrlObject
   replace?: boolean
@@ -18,7 +19,7 @@ type SidebarMenuItemProps = ComponentProps<'li'> & {
   active?: boolean
 };
 
-const SidebarMenuItem = ({ className, children, icon, text, href = '#', replace, external, active, ...props }: SidebarMenuItemProps) => {
+const SidebarMenuItem = ({ className, children, icon, badge, text, href = '#', replace, external, active, ...props }: SidebarMenuItemProps) => {
   return (
     <li {...props} className={clsx(styles.item, "sidebar-menu-item", { active }, className)}>
       {isValidElement<HTMLElement>(icon)
@@ -35,6 +36,11 @@ const SidebarMenuItem = ({ className, children, icon, text, href = '#', replace,
               ? <div className="sidebar-menu-text">{children}</div>
               : null}
       </Link>
+      {isValidElement<HTMLElement>(badge)
+        ? createElement(badge.type, { ...badge.props, className: clsx("sidebar-menu-badge", badge.props.className) })
+        : badge
+          ? <div className="sidebar-menu-badge">{badge}</div>
+          : null }
     </li>
   )
 };

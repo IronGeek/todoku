@@ -1,13 +1,6 @@
+type Writable<T> = { -readonly [P in keyof T]: T[P] };
+
 type TodoGroup = 'past' | 'today' | 'tomorrow' | 'this-week' | 'later';
-
-interface SetItemCompleted {
-  id: string
-  completed: boolean
-}
-
-interface ToggleItemPinned {
-  id: string
-}
 
 interface Todo {
   readonly id: string
@@ -22,11 +15,33 @@ interface Todo {
 
 type GroupedTodos = Record<TodoGroup, Todo[]>;
 
+type TodoFilter = 'all' | 'upcoming' | 'today' | 'done' | 'pin' | 'archive' | string
+
+interface Todos {
+  readonly title: string
+  readonly items: Todo[]
+  readonly grouped: GroupedTodos
+}
+
 interface Todos {
   readonly title: string
   readonly items: Todo[]
 }
 
-type Writable<T> = { -readonly [P in keyof T]: T[P] };
+interface SetTodos {
+  readonly title: string
+  readonly items: Todo[]
+}
 
-export type { Writable, TodoGroup, Todo, Todos, GroupedTodos, SetItemCompleted, ToggleItemPinned };
+interface SetItemCompleted {
+  id: string
+  completed: boolean
+}
+
+interface ToggleItemPinned {
+  id: string
+}
+
+export type {
+  Writable, TodoGroup, Todo, Todos, GroupedTodos, SetTodos, SetItemCompleted, ToggleItemPinned, TodoFilter
+};

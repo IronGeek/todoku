@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { ComponentProps } from 'react';
+import { ComponentProps, useMemo } from 'react';
 import { titleCase } from 'title-case';
 
 import { useAppSelector } from '@/state/hook';
@@ -10,12 +10,16 @@ type PageTitleProps = ComponentProps<'div'>;
 
 const PageTitle = ({ className, ...props }: PageTitleProps) => {
   const { title, items } = useAppSelector((state) => state.todos);
-  const count = items?.length ?? 0;
-  const completed = items?.reduce((total, item) => {
-      if (item.done) { total++ }
+  const [count, completed] = useMemo(() => {
+    const count = items?.length ?? 0;
+    const completed = items?.reduce((total, item) => {
+        if (item.done) { total++ }
 
-      return total;
-    }, 0) ?? 0;
+        return total;
+      }, 0) ?? 0;
+
+    return [count, completed];
+  }, [items]);
 
   return (
     <div {...props} className={clsx(styles.title, "page-title", className)}>

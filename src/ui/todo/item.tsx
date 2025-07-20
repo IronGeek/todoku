@@ -24,10 +24,7 @@ const TodoItem = ({ className, item, ...props }: TodoItemProps) => {
   };
 
   const handleCheck = (e: ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-
     const { value, checked } = e.currentTarget;
-    console.log(value, checked);
 
     dispatch(setItemCompleted({ id: value, completed: checked }));
   }

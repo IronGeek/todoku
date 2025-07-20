@@ -10,7 +10,19 @@
     margin-bottom: -.1em;
   }
 
+  :global(.sidebar-menu-badge) {
+    border: 1px solid var(--app-border-color);
+    border-radius: .25rem;
+
+    font-size: .875em;
+    font-weight: normal;
+    color: #666;
+
+    margin-left: auto;
+    padding: 0 .25rem
+  }
+
   &:global(.active) {
-    border-right: .25rem solid var(--app-border-color);
+    font-weight: bold;
   }
 }

@@ -5,7 +5,7 @@ import type { Todo } from '@/state/todo/types';
 
 import todos from '@/lib/data/todo.json' with { type: 'json' };
 
-const getTodosTitle = async (type?: 'upcoming' | 'today' | 'pin' | 'done' | 'archive' | string): Promise<string> => {
+const getTodosTitle = async (type?: 'all' | 'upcoming' | 'today' | 'pin' | 'done' | 'archive' | string): Promise<string> => {
 if (!type) { return 'Todos' }
 
   switch (type) {
@@ -19,6 +19,9 @@ if (!type) { return 'Todos' }
     case 'done':
       return 'Completed';
 
+    case 'all':
+      return 'All Tasks';
+
     case 'archive':
       return 'Archived';
 
@@ -27,10 +30,13 @@ if (!type) { return 'Todos' }
   }
 }
 
-const getTodos = async (type?: 'upcoming' | 'today' | 'pin' | 'done' | 'archive' | string): Promise<Todo[]> => {
+const getTodos = async (type?: 'all' | 'upcoming' | 'today' | 'pin' | 'done' | 'archive' | string): Promise<Todo[]> => {
   if (!type) { return todos }
 
   switch (type) {
+    case 'all':
+      return todos;
+
     case 'upcoming':
       return todos.filter((todo) => todo.due && isAfter(new Date(todo.due), startOfToday()));
 

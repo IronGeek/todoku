@@ -9,7 +9,11 @@ const Page = async () => {
   return (
     <Main>
       <AppStateUpdater title="All Tasks" todos={todos} />
-      <Todo.List title="Today" filter="today" />
+      <div className="grid grid-cols-2 gap-8">
+        <Todo.List className="col-span-2" title="Today" filter="today" />
+        <Todo.List className="self-start" title="Tomorrow" filter="tomorrow" />
+        <Todo.List className="self-start" title="This Week" filter="this-week" />
+      </div>
     </Main>
   );
 }

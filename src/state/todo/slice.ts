@@ -1,6 +1,6 @@
 import { isToday, isTomorrow, isThisWeek, isPast } from 'date-fns';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { Writable, GroupedTodos, Todos, Todo, SetItemCompleted, ToggleItemPinned } from './types';
+import { Writable, GroupedTodos, Todos, Todo, SetItemCompleted, ToggleItemPinned, SetTodos } from './types';
 
 const groupTodos = (todos: Todo[]): GroupedTodos => {
   const grouped = todos.reduce<GroupedTodos>((acc, todo) => {
@@ -41,17 +41,20 @@ export const todosSlice = createSlice({
   name: 'todos',
   initialState: {
     title: '',
-    items: null
+    items: null,
+    grouped: null
   },
   reducers: {
-    setTodos: (state, action: PayloadAction<Todos>) => {
+    setTodos: (state, action: PayloadAction<SetTodos>) => {
       state.title = action.payload.title;
 
       state.items = action.payload.items;
+      state.grouped = groupTodos(action.payload.items);
     },
-    resetTodos: (state: Writable<Todos>) => {
+    resetTodos: (state) => {
       state.title = '';
       state.items = null;
+      state.grouped = null;
     },
     setItemCompleted: (state, action: PayloadAction<SetItemCompleted>) => {
       state.items = state.items.map((item) => {

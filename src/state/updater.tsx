@@ -15,7 +15,10 @@ const  AppStateUpdater = ({ title, todos }: AppStateUpdaterProps) => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(setTodos({ title, items: todos }));
+    dispatch(setTodos({
+      title,
+      items: todos
+    }));
 
     return () => { dispatch(resetTodos()) }
   }, []);
