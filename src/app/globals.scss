@@ -16,8 +16,16 @@ body { min-height:100% }
   --app-border-color: #ddd;
   --app-primary-color: #222;
   --app-danger-color: #903;
+
+  --app-text-gradient: linear-gradient(180deg, #555555, #000000);
 }
 
+.gradient-text {
+  background: var(--app-text-gradient);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 
 button, a[href] {
   &.button {

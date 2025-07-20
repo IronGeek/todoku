@@ -1,5 +1,7 @@
 import { clsx } from 'clsx';
+
 import { fonts } from '@/ui/fonts';
+import { AppStateProvider } from '@/state/provider'
 
 import '@/app/globals.scss';
 
@@ -9,7 +11,7 @@ const RootLayout = ({ children }) => (
     lang="en"
     dir="ltr">
     <body>
-      {children}
+      <AppStateProvider>{children}</AppStateProvider>
     </body>
   </html>
 )
