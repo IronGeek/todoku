@@ -1,0 +1,10 @@
+.link {
+  display: flex;
+  align-items: center;
+
+  gap: .25rem;
+
+  :global(.link-icon) {
+    font-size: .75em;
+  }
+}

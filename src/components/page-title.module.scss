@@ -1,0 +1,12 @@
+.title {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+
+  :global(.count) {
+    border: 1px dotted var(--app-border-color);
+    border-radius: .5rem;
+
+    padding: 0 .25rem;
+  }
+}

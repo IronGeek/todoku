@@ -1,0 +1,25 @@
+.menu {
+  position: relative;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: end;
+  gap: 1rem;
+
+  height: 100%;
+
+  :global(.page-menu-item) {
+    position: relative;
+
+    a:hover {
+      text-decoration: underline;
+      text-decoration-color: #903;
+      text-decoration-style: wavy;
+    }
+  }
+
+  :global(.page-menu-item.active) {
+    color: #903;
+  }
+}
