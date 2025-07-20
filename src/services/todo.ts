@@ -1,7 +1,7 @@
 import { startOfToday, isAfter, isToday } from 'date-fns';
 import { titleCase } from 'title-case';
 
-import type { Todo } from '@/state/todos/types';
+import type { Todo } from '@/state/todo/types';
 
 import todos from '@/lib/data/todo.json' with { type: 'json' };
 

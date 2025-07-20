@@ -11,8 +11,13 @@ import TodayIcon from '@/ui/icons/today.svg';
 import PinIcon from '@/ui/icons/pin.svg';
 import TaskIcon from '@/ui/icons/task.svg';
 import CompletedIcon from '@/ui/icons/completed.svg';
+import CalendarIcon from '@/ui/icons/calendar.svg';
+import TagIcon from '@/ui/icons/tag.svg';
+import ExpandedIcon from '@/ui/icons/expanded.svg';
+import CollapsedIcon from '@/ui/icons/collapsed.svg';
 
 export {
   GitHubIcon, UpRightIcon, SignOutIcon, SettingsIcon, HashIcon, ListIcon, PlusIcon,
-  ArchivedIcon, UpcomingIcon, TodayIcon, PinIcon, TaskIcon, CompletedIcon
+  ArchivedIcon, UpcomingIcon, TodayIcon, PinIcon, TaskIcon, CompletedIcon, CalendarIcon,
+  TagIcon, ExpandedIcon, CollapsedIcon
 };

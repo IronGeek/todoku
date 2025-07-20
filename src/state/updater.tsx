@@ -2,9 +2,9 @@
 
 import { useEffect } from 'react';
 import { useAppDispatch } from '@/state/hook';
-import { resetTodos, setTodos } from '@/state/todos/slice';
+import { resetTodos, setTodos } from '@/state/todo/slice';
 
-import type { Todo } from '@/state/todos/types';
+import type { Todo } from '@/state/todo/types';
 
 interface AppStateUpdaterProps {
   title: string,

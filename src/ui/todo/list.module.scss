@@ -1,0 +1,28 @@
+.list {
+  border: 1px solid var(--app-border-color);
+  border-radius: .375rem;
+
+  padding: .5rem 1rem;
+
+  :global(.todo-list-header) {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+
+    padding: .5rem;
+
+    :global(.todo-list-title) {
+      font-size: 1.125em;
+      font-weight: bold;
+    }
+
+    :global(.todo-list-badge) {
+      border: 1px solid var(--app-border-color);
+      border-radius: .5rem;
+
+      font-size: .75em;
+
+      padding: .125rem .25rem;
+    }
+  }
+}

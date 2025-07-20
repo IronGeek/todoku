@@ -7,23 +7,26 @@ import { SidebarTags } from '@/ui/sidebar/tags';
 import { SidebarTag } from '@/ui/sidebar/tag';
 import { SettingsIcon, SignOutIcon } from '@/ui/icons';
 
-import type { ComponentProps, MouseEventHandler } from 'react';
+import { createElement, isValidElement, type ComponentProps, type MouseEventHandler, type ReactNode } from 'react';
 
 import styles from './sidebar.module.scss';
 
 type SidebarProps = ComponentProps<'div'> & {
+  logo?: ReactNode
   collapsed?: boolean
   toggleSidebar?: MouseEventHandler<HTMLButtonElement>
 };
 
-const Sidebar = ({ className, toggleSidebar, collapsed, children, ...props }: SidebarProps) => {
+const Sidebar = ({ className, logo, toggleSidebar, collapsed, children, ...props }: SidebarProps) => {
   return (
     <div
       {...props}
       className={clsx(styles.sidebar, { 'sidebar-hidden': collapsed }, className)}
     >
       <header className="sidebar-header">
-        <div>AppName</div>
+        { isValidElement<HTMLElement>(logo)
+          ? createElement(logo.type, { ...logo.props, className: clsx('sidebar-logo', logo.props.className) })
+          : <div>{logo}</div> }
         <SidebarToggler onClick={toggleSidebar} />
       </header>
       <div className="sidebar-content">

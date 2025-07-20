@@ -30,7 +30,11 @@ const Layout = ({ className, footer, navbar, sidebar, children, ...props }: Layo
   return (
     <div {...props} className={clsx(styles.layout, className)}>
       {sidebar !== false
-        ? <Sidebar className="layout-sidebar" collapsed={sidebarCollapsed} toggleSidebar={collapseSidebar}>
+        ? <Sidebar
+            logo="Todoku"
+            className="layout-sidebar"
+            collapsed={sidebarCollapsed}
+            toggleSidebar={collapseSidebar}>
             <Sidebar.Menu header="Tasks">
               <Sidebar.MenuItem active={pathname == '/'} icon={<TaskIcon />}  href="/" text="All" />
               <Sidebar.MenuItem active={pathname == '/upcoming'} icon={<UpcomingIcon />}  href="/upcoming" text="Upcoming" />
