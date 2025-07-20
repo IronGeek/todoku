@@ -5,6 +5,10 @@ interface SetItemCompleted {
   completed: boolean
 }
 
+interface ToggleItemPinned {
+  id: string
+}
+
 interface Todo {
   readonly id: string
   readonly title: string
@@ -12,6 +16,7 @@ interface Todo {
   readonly due: number
   readonly list: string
   readonly tags: string[]
+  readonly stared: boolean
   readonly done: boolean
 }
 
@@ -24,4 +29,4 @@ interface Todos {
 
 type Writable<T> = { -readonly [P in keyof T]: T[P] };
 
-export type { Writable, TodoGroup, Todo, Todos, GroupedTodos, SetItemCompleted };
+export type { Writable, TodoGroup, Todo, Todos, GroupedTodos, SetItemCompleted, ToggleItemPinned };

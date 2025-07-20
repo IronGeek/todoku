@@ -9,6 +9,7 @@ import ArchivedIcon from '@/ui/icons/archived.svg';
 import UpcomingIcon from '@/ui/icons/upcoming.svg';
 import TodayIcon from '@/ui/icons/today.svg';
 import PinIcon from '@/ui/icons/pin.svg';
+import PinnedIcon from '@/ui/icons/pinned.svg';
 import TaskIcon from '@/ui/icons/task.svg';
 import CompletedIcon from '@/ui/icons/completed.svg';
 import CalendarIcon from '@/ui/icons/calendar.svg';
@@ -18,6 +19,6 @@ import CollapsedIcon from '@/ui/icons/collapsed.svg';
 
 export {
   GitHubIcon, UpRightIcon, SignOutIcon, SettingsIcon, HashIcon, ListIcon, PlusIcon,
-  ArchivedIcon, UpcomingIcon, TodayIcon, PinIcon, TaskIcon, CompletedIcon, CalendarIcon,
-  TagIcon, ExpandedIcon, CollapsedIcon
+  ArchivedIcon, UpcomingIcon, TodayIcon, PinnedIcon, PinIcon, TaskIcon, CompletedIcon,
+  CalendarIcon, TagIcon, ExpandedIcon, CollapsedIcon
 };

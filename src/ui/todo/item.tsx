@@ -1,12 +1,12 @@
 'use client';
 
-import{ ChangeEvent, useState, type ComponentProps } from "react";
+import{ ChangeEvent, MouseEvent, useState, type ComponentProps } from "react";
 import clsx from "clsx";
 import { format } from "date-fns";
 
-import { CalendarIcon, CollapsedIcon, ExpandedIcon, HashIcon, TagIcon } from "@/ui/icons";
+import { CalendarIcon, CollapsedIcon, ExpandedIcon, HashIcon, PinIcon, PinnedIcon, TagIcon } from "@/ui/icons";
 import { useAppDispatch } from "@/state/hook";
-import { setItemCompleted } from "@/state/todo/slice";
+import { setItemCompleted, toggleItemPinned } from "@/state/todo/slice";
 
 import type { Todo } from "@/state/todo/types";
 
@@ -24,16 +24,31 @@ const TodoItem = ({ className, item, ...props }: TodoItemProps) => {
   };
 
   const handleCheck = (e: ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+
     const { value, checked } = e.currentTarget;
     console.log(value, checked);
 
     dispatch(setItemCompleted({ id: value, completed: checked }));
   }
 
+  const handlePin = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+
+    const { value } = e.currentTarget;
+
+    dispatch(toggleItemPinned({ id: value }));
+  }
+
   return (
     <div {...props} className={clsx(styles.item, "todo-item", { completed: item.done }, className)}>
+      <button type="button" className={clsx("todo-item-pin", { pinned: item.stared })} value={item.id} onClick={handlePin} >
+        { item.stared ? <PinnedIcon /> : <PinIcon /> }
+      </button>
       <input type="checkbox" className="todo-item-check" checked={item.done} value={item.id} onChange={handleCheck} />
-      <div className="todo-item-title">{item.title}</div>
+      <div className="todo-item-title">
+        {item.title}
+      </div>
       { expanded
         ? <>
             <div className="todo-item-desc">{item.description}</div>
