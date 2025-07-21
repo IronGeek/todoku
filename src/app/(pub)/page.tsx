@@ -20,7 +20,9 @@ const Page = () => {
   }, []);
 
   return (
-    <Main className="gap-8">
+    <Main className="gap-8" actions={
+      <button className="button">New Task</button>
+    }>
       { grouped.today.length > 0 ? <TodoList title="Today" items={grouped.today} /> : null }
       <div className="grid gap-8 xl:grid-cols-2">
         { grouped.tomorrow.length > 0 ? <TodoList className="self-start" title="Tomorrow" items={grouped.tomorrow} /> : null }

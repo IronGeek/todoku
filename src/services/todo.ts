@@ -14,6 +14,37 @@ const lists = todos.reduce((acc, item) => {
   return acc;
 }, []);
 
+const sortBoolean = (a: boolean, b: boolean): number => {
+  const boolA = Number(a), boolB = Number(b);
+
+  if (boolA > boolB) { return -1; }
+
+  if (boolB > boolA) { return 1; }
+
+  return 0;
+}
+
+const sortDate = (a?: number, b?: number): number => {
+
+  if (typeof b === 'undefined') { return typeof a === 'undefined' ? 0 : -1 }
+  if (typeof a === 'undefined') { return typeof b === 'undefined' ? 0 : 1 }
+
+  return a - b;
+}
+
+const todosSorter = (a: Todo, b: Todo): number  => {
+  const star = sortBoolean(a.stared, b.stared);
+  if (star !== 0) { return star }
+
+  const bool = sortBoolean(b.done, a.done);
+  if (bool !== 0) { return bool }
+
+  const date = sortDate(a.due, b.due);
+  if (date !== 0) { return date }
+
+  return 0;
+}
+
 const resolveSlug = (slug?: string | string[]): string => {
   return Array.isArray(slug) ? slug.join('/') : slug;
 };
@@ -83,9 +114,9 @@ const getTodosFilter = (listOrCategory?: string): TodosFilter => {
 };
 
 const getTodos = async (listOrCategory?: string): Promise<Todo[]> => {
-  if (!listOrCategory) { return todos }
+  if (!listOrCategory) { return todos.toSorted(todosSorter) }
 
-  return todos.filter(getTodosFilter(listOrCategory));
+  return todos.filter(getTodosFilter(listOrCategory)).toSorted(todosSorter);
 };
 
 const getSummary = async (items: Todo[], now: Date = new Date): Promise<TodoSummary> => {
@@ -167,11 +198,11 @@ const groupTodos = (todos: Todo[]): GroupedTodos => {
   });
 
   Object.keys(grouped).forEach((k) => {
-    grouped[k].sort((a, b) => a.due - b.due);
+    grouped[k].sort(todosSorter);
   })
 
   return grouped;
 }
 
-export { resolveSlug, isValidListOrCategory, getTodos, getSummary, getTodosTitle, getTodosFilter, groupTodos };
+export { resolveSlug, isValidListOrCategory, todosSorter, getTodos, getSummary, getTodosTitle, getTodosFilter, groupTodos };
 

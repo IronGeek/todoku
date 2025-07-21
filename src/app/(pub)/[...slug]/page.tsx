@@ -11,17 +11,17 @@ import { setTitle } from '@/state/todo';
 
 const Page = () => {
   const { slug } = useParams();
-  const listOrCatefory = resolveSlug(slug);
+  const listOrCategory = resolveSlug(slug);
   const dispatch = useAppDispatch();
   const items: Todo[] = useAppSelector((state)=> state.todos.items);
 
   const grouped = useMemo(() => {
-    const filtered = items?.filter(getTodosFilter(listOrCatefory))
+    const filtered = items?.filter(getTodosFilter(listOrCategory))
     return groupTodos(filtered ?? []);
   }, [items]);
 
   useEffect(() => {
-    dispatch(setTitle({ title: getTodosTitle(listOrCatefory) }))
+    dispatch(setTitle({ title: getTodosTitle(listOrCategory) }))
   }, [slug]);
 
   return (
