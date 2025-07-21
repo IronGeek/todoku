@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { SetCompleted, SetPinned, SetTodos, SetSummary, SetTitle } from './types';
+import { createSlice } from '@reduxjs/toolkit'
+import { SetCompletedAction, SetPinnedAction, SetTodosAction, SetSummaryAction, SetTitleAction } from './types';
 
 export const todosSlice = createSlice({
   name: 'todos',
@@ -9,20 +9,20 @@ export const todosSlice = createSlice({
     summary: null
   },
   reducers: {
-    setTodos: (state, action: PayloadAction<SetTodos>) => {
+    setTodos: (state, action: SetTodosAction) => {
       state.items = action.payload.items;
     },
     resetTodos: (state) => {
       state.title = '';
       state.items = null;
     },
-    setTitle: (state, action: PayloadAction<SetTitle>) => {
+    setTitle: (state, action: SetTitleAction) => {
       state.title = action.payload.title;
     },
-    setSummary: (state, action: PayloadAction<SetSummary>) => {
+    setSummary: (state, action: SetSummaryAction) => {
       state.summary = { ...action.payload.summary };
     },
-    setCompleted: (state, action: PayloadAction<SetCompleted>) => {
+    setCompleted: (state, action: SetCompletedAction) => {
       state.items = state.items.map((item) => {
         if (item.id === action.payload.id) {
           return { ...item, done: action.payload.completed }
@@ -31,7 +31,7 @@ export const todosSlice = createSlice({
         return item;
       });
     },
-    setPinned: (state, action: PayloadAction<SetPinned>) => {
+    setPinned: (state, action: SetPinnedAction) => {
       state.items = state.items.map((item) => {
         if (item.id === action.payload.id) {
           return { ...item, stared: !item.stared }

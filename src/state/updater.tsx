@@ -1,8 +1,10 @@
 'use client';
 
 import { PropsWithChildren, useEffect } from 'react';
-import { useAppDispatch } from '@/state/hook';
-import { resetTodos, setTodos } from '@/state/todo';
+import { useAppDispatch, useAppSelector } from '@/state/hook';
+import { resetTodos, setSummary, setTodos } from '@/state/todo';
+
+import { getSummary } from '@/services/todo';
 
 import type { Todo } from '@/state/todo/types';
 
@@ -13,6 +15,16 @@ type AppStateUpdaterProps = PropsWithChildren<{
 
 const  AppStateUpdater = ({ children, todos }: AppStateUpdaterProps) => {
   const dispatch = useAppDispatch();
+  const items = useAppSelector((state) => state.todos.items);
+
+  const fetchSummary = (items: Todo[]) => async (dispatch) => {
+    const summary = await getSummary(items);
+    dispatch(setSummary( { summary }))
+  }
+
+  useEffect(() => {
+    dispatch(fetchSummary(items));
+  }, [items]);
 
   useEffect(() => {
     dispatch(setTodos({ items: todos }));

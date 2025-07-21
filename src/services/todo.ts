@@ -1,24 +1,48 @@
-import { startOfToday, isAfter, isToday, isTomorrow, isThisWeek, isPast } from 'date-fns';
+import { startOfToday, isAfter, isToday, isTomorrow, isThisWeek, isPast, startOfDay } from 'date-fns';
 import { titleCase } from 'title-case';
 
-import type { GroupedTodos, Todo, TodosFilter } from '@/state/todo/types';
+import type { GroupedTodos, Todo, TodoCategory, TodosFilter, TodoSummary } from '@/state/todo/types';
 
 import todos from '@/lib/data/todo.json' with { type: 'json' };
 
-const isValidType = (type?: 'upcoming' | 'today' | 'pin' | 'done' | 'archive' | string): boolean =>{
-  if (typeof type === 'undefined') { return true }
+const categories: TodoCategory[] = ['all', 'upcoming','today','pin','done','archive'];
 
-  return ['upcoming','today','pin','done','archive','personal','work','health','shopping','other','misc'].includes(type);
+const listPrefix = 'l/';
+const lists = todos.reduce((acc, item) => {
+  if (acc.indexOf(item.list) < 0) { acc.push(item.list) }
+
+  return acc;
+}, []);
+
+const resolveSlug = (slug?: string | string[]): string => {
+  return Array.isArray(slug) ? slug.join('/') : slug;
+};
+
+const isValidList = (list?: string): boolean => {
+  if (list.startsWith(listPrefix)) {
+    return lists.includes(list.substring(listPrefix.length));
+  }
+
+  return false;
 }
 
-const getTodosTitle = (type?: 'upcoming' | 'today' | 'pin' | 'done' | 'archive' | string): string => {
+const isValidListOrCategory = (slug?: string | string[]): boolean =>{
+  const listOrCategory = resolveSlug(slug);
 
-if (!type) { return 'All Tasks' }
+  if (typeof listOrCategory === 'undefined') { return true } // default category
 
-  switch (type) {
+  if (isValidList(listOrCategory)) { return true }
+
+  return categories.includes(listOrCategory as TodoCategory);
+}
+
+const getTodosTitle = (listOrCategory?: string): string => {
+  if (!listOrCategory) { return 'Tasks' } // default title
+
+  switch (listOrCategory) {
     case 'upcoming':
     case 'today':
-      return titleCase(type);
+      return titleCase(listOrCategory);
 
     case 'pin':
       return 'Pinned';
@@ -26,21 +50,18 @@ if (!type) { return 'All Tasks' }
     case 'done':
       return 'Completed';
 
-    case 'all':
-      return 'All Tasks';
-
     case 'archive':
       return 'Archived';
 
     default:
-      return titleCase(type);
+      return isValidList(listOrCategory) ? titleCase(listOrCategory.substring(listPrefix.length)) : 'Unknown';
   }
 }
 
-const getTodosFilter = (type?: 'upcoming' | 'today' | 'pin' | 'done' | 'archive' | string): TodosFilter => {
-  if (!type) { return Boolean }
+const getTodosFilter = (listOrCategory?: string): TodosFilter => {
+  if (!listOrCategory) { return Boolean }
 
-  switch (type) {
+  switch (listOrCategory) {
     case 'upcoming':
       return (todo) => todo.due && isAfter(new Date(todo.due), startOfToday());
 
@@ -53,30 +74,68 @@ const getTodosFilter = (type?: 'upcoming' | 'today' | 'pin' | 'done' | 'archive'
     case 'done':
       return (todo) => todo.done;
 
+    case 'archive':
+      return (todo) => todo.list === 'archive';
+
     default:
-      return (todo) => todo.list === type;
+      return isValidList(listOrCategory) ? (todo) => todo.list === listOrCategory.substring(listPrefix.length) : () => false;
   }
 };
 
-const getTodos = async (type?: 'upcoming' | 'today' | 'pin' | 'done' | 'archive' | string): Promise<Todo[]> => {
-  if (!type) { return todos }
+const getTodos = async (listOrCategory?: string): Promise<Todo[]> => {
+  if (!listOrCategory) { return todos }
 
-  switch (type) {
-    case 'upcoming':
-      return todos.filter((todo) => todo.due && isAfter(new Date(todo.due), startOfToday()));
+  return todos.filter(getTodosFilter(listOrCategory));
+};
 
-    case 'today':
-      return todos.filter((todo) => todo.due && isToday(new Date(todo.due)));
+const getSummary = async (items: Todo[], now: Date = new Date): Promise<TodoSummary> => {
+  const sum: TodoSummary = {
+    all: [0, items?.length ?? 0],
+    upcoming: [0, 0],
+    today: [0, 0],
+    done: [0, 0],
+    pin: [0, 0],
+    archive: [0, 0],
+    list: {}
+  };
 
-    case 'pin':
-      return todos.filter((todo) => todo.stared);
+  return items?.reduce((acc, item: Todo) => {
+    if (item.done) { acc.all[0]++ }
 
-    case 'done':
-      return todos.filter((todo) => todo.done);
+    if (item.due) {
+      const date = new Date(item.due);
+      if (isToday(date)) {
+        if (item.done) { acc.today[0]++ }
+        acc.today[1]++;
+      }
+      if (isAfter(date, startOfDay(now))) {
+        if (item.done) { acc.upcoming[0]++ }
+        acc.upcoming[1]++;
+      }
+    }
 
-    default:
-      return todos.filter((todo) => todo.list === type);
-  }
+    if (item.done) {
+      if (item.done) { acc.done[0]++ }
+      acc.done[1]++;
+    }
+    if (item.stared) {
+      if (item.done) { acc.pin[0]++ }
+      acc.pin[1]++;
+    }
+
+    const { list } = item;
+    if (list === 'archive') {
+      if (item.done) { acc.archive[0]++ }
+      acc.archive[1]++;
+    } else if (list) {
+      if (!acc.list[list]) { acc.list[list] = [0, 0] }
+
+      if (item.done) { acc.list[list][0]++ }
+      acc.list[list][1]++;
+    }
+
+    return acc;
+  }, sum) ?? sum;;
 };
 
 const groupTodos = (todos: Todo[]): GroupedTodos => {
@@ -114,5 +173,5 @@ const groupTodos = (todos: Todo[]): GroupedTodos => {
   return grouped;
 }
 
-export { isValidType, getTodos, getTodosTitle, getTodosFilter, groupTodos };
+export { resolveSlug, isValidListOrCategory, getTodos, getSummary, getTodosTitle, getTodosFilter, groupTodos };
 

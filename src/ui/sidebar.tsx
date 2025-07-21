@@ -5,7 +5,6 @@ import { SidebarToggler } from '@/ui/sidebar/toggler';
 import { SidebarMenuItem } from '@/ui/sidebar/menu-item';
 import { SidebarTags } from '@/ui/sidebar/tags';
 import { SidebarTag } from '@/ui/sidebar/tag';
-import { SettingsIcon, SignOutIcon } from '@/ui/icons';
 
 import { createElement, isValidElement, type ComponentProps, type MouseEventHandler, type ReactNode } from 'react';
 
@@ -13,11 +12,12 @@ import styles from './sidebar.module.scss';
 
 type SidebarProps = ComponentProps<'div'> & {
   logo?: ReactNode
+  footer?: ReactNode
   collapsed?: boolean
   toggleSidebar?: MouseEventHandler<HTMLButtonElement>
 };
 
-const Sidebar = ({ className, logo, toggleSidebar, collapsed, children, ...props }: SidebarProps) => {
+const Sidebar = ({ className, logo, footer, toggleSidebar, collapsed, children, ...props }: SidebarProps) => {
   return (
     <div
       {...props}
@@ -32,12 +32,9 @@ const Sidebar = ({ className, logo, toggleSidebar, collapsed, children, ...props
       <div className="sidebar-content">
         {children}
       </div>
-      <div className="sidebar-footer">
-        <SidebarMenu>
-          <SidebarMenuItem icon={<SettingsIcon />} text="Settings" />
-          <SidebarMenuItem icon={<SignOutIcon />} text="Sign out" />
-        </SidebarMenu>
-      </div>
+      { isValidElement<HTMLElement>(footer)
+        ? createElement(footer.type, { ... footer.props, className: clsx('sidebar-footer', footer.props.className) })
+        : <div className="sidebar-footer">{footer}</div> }
     </div>
   )
 };

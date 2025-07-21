@@ -1,6 +1,9 @@
+import type { PayloadAction } from '@reduxjs/toolkit';
+
 type Writable<T> = { -readonly [P in keyof T]: T[P] };
 
-type TodoGroup = 'past' | 'today' | 'tomorrow' | 'this-week' | 'later';
+type TodoCutoff = 'past' | 'today' | 'tomorrow' | 'this-week' | 'later';
+type TodoCategory = 'all' | 'upcoming' | 'today' | 'done' |'pin' | 'archive';
 
 interface Todo {
   readonly id: string
@@ -13,19 +16,13 @@ interface Todo {
   readonly done: boolean
 }
 
-type GroupedTodos = Record<TodoGroup, Todo[]>;
+type GroupedTodos = Record<TodoCutoff, Todo[]>;
 
 type TodosFilter = (item: Todo) => boolean;
 
-interface TodoSummary {
-  readonly upcoming: [number, number]
-  readonly today   : [number, number]
-  readonly done    : [number, number]
-  readonly pin     : [number, number]
-  readonly all     : [number, number]
-  readonly archive : [number, number]
-  readonly list    : Record<string, [number, number]>
-}
+type TodoSummary = Record<TodoCategory, [number, number]> & {
+  readonly list: Record<string, [number, number]>
+};
 
 interface Todos {
   readonly title: string
@@ -33,29 +30,29 @@ interface Todos {
   readonly summary: TodoSummary
 }
 
-interface SetTodos {
+type SetTodosAction = PayloadAction<{
   readonly items: Todo[]
-}
+}>;
 
-interface SetTitle {
+type SetTitleAction = PayloadAction<{
   readonly title: string
-}
+}>;
 
-interface SetSummary {
+type SetSummaryAction = PayloadAction<{
   readonly summary: TodoSummary
-}
+}>;
 
-interface SetCompleted {
+type SetCompletedAction = PayloadAction<{
   readonly id: string
   readonly completed: boolean
-}
+}>;
 
-interface SetPinned {
+type SetPinnedAction = PayloadAction<{
   readonly id: string
   readonly stared: boolean
-}
+}>;
 
 export type {
-  Writable, TodoGroup, Todo, Todos, GroupedTodos, TodoSummary, TodosFilter,
-  SetTodos, SetTitle, SetSummary, SetCompleted, SetPinned
+  Writable, TodoCutoff, TodoCategory, Todo, Todos, GroupedTodos, TodoSummary, TodosFilter,
+  SetTodosAction, SetTitleAction, SetSummaryAction, SetCompletedAction, SetPinnedAction
 };

@@ -2,7 +2,7 @@
 
 import { Main } from '@/components/main';
 import { TodoList } from '@/ui/todo/list';
-import { getTodosFilter, getTodosTitle, groupTodos } from '@/services/todo';
+import { getTodosFilter, getTodosTitle, groupTodos, resolveSlug } from '@/services/todo';
 import { Todo } from '@/state/todo/types';
 import { useAppDispatch, useAppSelector } from '@/state/hook';
 import { useEffect, useMemo } from 'react';
@@ -10,18 +10,19 @@ import { useParams } from 'next/navigation';
 import { setTitle } from '@/state/todo';
 
 const Page = () => {
-  const { type } = useParams();
+  const { slug } = useParams();
+  const listOrCatefory = resolveSlug(slug);
   const dispatch = useAppDispatch();
   const items: Todo[] = useAppSelector((state)=> state.todos.items);
 
   const grouped = useMemo(() => {
-    const filtered = items?.filter(getTodosFilter(type.toString()))
+    const filtered = items?.filter(getTodosFilter(listOrCatefory))
     return groupTodos(filtered ?? []);
   }, [items]);
 
   useEffect(() => {
-    dispatch(setTitle({ title: getTodosTitle(type.toString()) }))
-  }, [type]);
+    dispatch(setTitle({ title: getTodosTitle(listOrCatefory) }))
+  }, [slug]);
 
   return (
     <Main className="gap-8">

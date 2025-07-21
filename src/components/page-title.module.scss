@@ -11,4 +11,9 @@
 
     padding: 0 .25rem;
   }
+
+  :global(.page-title-separator) {
+    color: var(--app-border-color);
+    padding: 0 .125rem;
+  }
 }

@@ -29,7 +29,7 @@ const PageTitle = ({ className, ...props }: PageTitleProps) => {
   return (
     <div {...props} className={clsx(styles.title, "page-title", className)}>
       <div>{titleCase(title)}</div>
-      { total > 0 ? <div className="count">{completed} / {total}</div> : null }
+      { total > 0 ? <div className="count">{completed}<span className="page-title-separator">/</span>{total}</div> : null }
     </div>
   )
 }
