@@ -3,7 +3,7 @@
   flex-direction: column;
 
   margin: 0 auto;
-  padding: 3rem;
+  padding: 2rem 3rem;
 
   // max-width: 96rem;
 
@@ -18,32 +18,38 @@
     }
   }
 
-  &.fullscreen {
+  &:global(.fullscreen) {
     min-height: 100vh;
   }
 
-  &:not(.fullscreen) {
+  &:global(:not(.fullscreen)) {
     min-height: calc(100% - var(--app-footer-height));
   }
-}
 
-.main_toolbar {
-  display: grid;
-  align-items: center;
-  grid-template-columns: auto auto;
-}
 
-.main_title {
-  font-family: var(--font-schoolbell);
-  font-size: 3rem;
-  margin-bottom: 2rem;
+  :global(.main-toolbar) {
+    display: grid;
+    align-items: center;
+    grid-template-columns: auto auto;
 
-  color: #903;
-}
+    &:empty {
+      display: none;
+    }
+  }
 
-.main_actions {
-  display: flex;
-  align-items: center;
-  justify-content: end;
-  gap: .5rem;
+  :global(.main-title) {
+    font-family: var(--font-schoolbell);
+    font-size: 3rem;
+    margin-bottom: 2rem;
+
+    color: #903;
+  }
+
+  :global(.main-actions) {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: .5rem;
+  }
+
 }

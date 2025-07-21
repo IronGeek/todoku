@@ -1,30 +1,35 @@
 import clsx from 'clsx';
 import { ComponentProps, useMemo } from 'react';
+import { useParams } from 'next/navigation';
 import { titleCase } from 'title-case';
 
 import { useAppSelector } from '@/state/hook';
 
 import styles from './page-title.module.scss';
+import { TodoSummary } from '@/state/todo/types';
 
 type PageTitleProps = ComponentProps<'div'>;
 
+const getSummary = (summary: TodoSummary, type = 'all'): [number, number] => {
+  if (['upcoming', 'today', 'done', 'pin', 'all', 'archive'].includes(type)) {
+    return summary[type];
+  }
+
+  return summary.list[type] ?? [0,0];
+}
+
 const PageTitle = ({ className, ...props }: PageTitleProps) => {
-  const { title, items } = useAppSelector((state) => state.todos);
-  const [count, completed] = useMemo(() => {
-    const count = items?.length ?? 0;
-    const completed = items?.reduce((total, item) => {
-        if (item.done) { total++ }
-
-        return total;
-      }, 0) ?? 0;
-
-    return [count, completed];
-  }, [items]);
+  const params = useParams();
+  const type = Array.isArray(params.type) ? params.type.join('/') : params.type;
+  const { title, summary } = useAppSelector((state) => state.todos);
+  const [completed, total] = useMemo(() => {
+    return summary ? getSummary(summary, type) : [0,0];
+  }, [summary, type]);
 
   return (
     <div {...props} className={clsx(styles.title, "page-title", className)}>
       <div>{titleCase(title)}</div>
-      { count > 0 ? <div className="count">{completed} / {count}</div> : null }
+      { total > 0 ? <div className="count">{completed} / {total}</div> : null }
     </div>
   )
 }

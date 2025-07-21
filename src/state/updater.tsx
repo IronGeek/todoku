@@ -1,29 +1,26 @@
 'use client';
 
-import { useEffect } from 'react';
+import { PropsWithChildren, useEffect } from 'react';
 import { useAppDispatch } from '@/state/hook';
-import { resetTodos, setTodos } from '@/state/todo/slice';
+import { resetTodos, setTodos } from '@/state/todo';
 
 import type { Todo } from '@/state/todo/types';
 
-interface AppStateUpdaterProps {
+type AppStateUpdaterProps = PropsWithChildren<{
   title: string,
-  todos: Todo[]
-}
+  todos: Todo[] | null
+}>
 
-const  AppStateUpdater = ({ title, todos }: AppStateUpdaterProps) => {
+const  AppStateUpdater = ({ children, todos }: AppStateUpdaterProps) => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(setTodos({
-      title,
-      items: todos
-    }));
+    dispatch(setTodos({ items: todos }));
 
     return () => { dispatch(resetTodos()) }
   }, []);
 
-  return null;
+  return children;
 };
 
 export { AppStateUpdater };

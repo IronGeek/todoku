@@ -15,7 +15,7 @@ body { min-height:100% }
 
   --app-border-color: #ddd;
   --app-primary-color: #222;
-  --app-danger-color: #903;
+  --app-primary-hover: #383838;
 
   --app-text-gradient: linear-gradient(180deg, #555555, #000000);
 }
@@ -25,48 +25,4 @@ body { min-height:100% }
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-}
-
-button, a[href] {
-  &.button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: nowrap;
-    gap: .5rem;
-
-    cursor: pointer;
-
-    border-radius: .5rem;
-    border: 1px solid #22222214;
-    padding: .375rem 1rem .5rem 1rem;
-
-    &> svg {
-      margin-bottom: -.125rem;
-    }
-
-    &.primary {
-      background-color: var(--app-primary-color);
-      color: #fff;
-
-      &:hover {
-        background-color: #383838;
-      }
-    }
-
-    &.danger {
-      background-color: var(--app-danger-color);
-      color: #fff;
-
-      &:hover {
-        background-color: #b40f46;
-      }
-    }
-
-    &.secondary {
-      &:hover {
-        background-color: rgba(34, 34, 34, 0.082);
-      }
-    }
-  }
 }

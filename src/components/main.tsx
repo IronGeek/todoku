@@ -11,14 +11,14 @@ type MainProps = Omit<ComponentProps<'div'>, 'title'> & {
 };
 
 const Main = ({ className, children, fullscreen, title, actions, ...props }: MainProps): ReactNode => (
-  <main {...props} className={clsx(styles.main, { [styles.fullscreen]: fullscreen }, className)}>
-    <div className={styles.main_toolbar}>
-      { isValidElement(title) ? title : title ? <h1 className={styles.main_title}>{title}</h1> : <div></div> }
+  <main {...props} className={clsx(styles.main, { fullscreen }, className)}>
+    <div className="main-toolbar">
+      { isValidElement(title) ? title : title ? <h1 className="main-title">{title}</h1> : null }
       { isValidElement<ComponentProps<'div'>>(actions)
-        ? createElement(actions.type, { ...actions.props, className: clsx(styles.main_actions, actions.props.className) })
+        ? createElement(actions.type, { ...actions.props, className: clsx("main-actions", actions.props.className) })
         : actions
-          ? <div className={styles.main_actions}>{actions}</div>
-          : <div></div> }
+          ? <div className="main-actions">{actions}</div>
+          : null }
     </div>
     {children}
   </main>

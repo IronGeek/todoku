@@ -6,11 +6,12 @@ import { format } from "date-fns";
 
 import { CalendarIcon, CollapsedIcon, ExpandedIcon, HashIcon, PinIcon, PinnedIcon, TagIcon } from "@/ui/icons";
 import { useAppDispatch } from "@/state/hook";
-import { setItemCompleted, toggleItemPinned } from "@/state/todo/slice";
+import { setCompleted, setPinned } from "@/state/todo";
 
 import type { Todo } from "@/state/todo/types";
 
 import styles from './item.module.scss';
+import { CheckBox } from "../forms/checkbox";
 
 type TodoItemProps = ComponentProps<'div'> & {
   item: Todo
@@ -26,23 +27,23 @@ const TodoItem = ({ className, item, ...props }: TodoItemProps) => {
   const handleCheck = (e: ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = e.currentTarget;
 
-    dispatch(setItemCompleted({ id: value, completed: checked }));
+    dispatch(setCompleted({ id: value, completed: checked }));
   }
 
-  const handlePin = (e: MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
+  const handlePin = (e: ChangeEvent<HTMLInputElement>) => {
+    const { value, checked } = e.currentTarget;
 
-    const { value } = e.currentTarget;
-
-    dispatch(toggleItemPinned({ id: value }));
+    dispatch(setPinned({ id: value, stared: checked }));
   }
 
   return (
     <div {...props} className={clsx(styles.item, "todo-item", { completed: item.done }, className)}>
-      <button type="button" className={clsx("todo-item-pin", { pinned: item.stared })} value={item.id} onClick={handlePin} >
-        { item.stared ? <PinnedIcon /> : <PinIcon /> }
-      </button>
-      <input type="checkbox" className="todo-item-check" checked={item.done} value={item.id} onChange={handleCheck} />
+      <CheckBox
+        className={clsx("checkbutton todo-item-pin", { pinned: item.stared })}
+        checked={item.stared} value={item.id} onChange={handlePin}>
+        <PinnedIcon />
+      </CheckBox>
+      <CheckBox className="todo-item-check" checked={item.done} value={item.id} onChange={handleCheck} />
       <div className="todo-item-title">
         {item.title}
       </div>

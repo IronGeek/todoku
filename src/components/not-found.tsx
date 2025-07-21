@@ -2,6 +2,7 @@ import clsx from 'clsx';
 import Link from 'next/link';
 
 import styles from './not-found.module.scss';
+import { LinkButton } from '@/ui/forms/link-button';
 
 const NotFound = () => (
   <div className={styles.container}>
@@ -14,13 +15,13 @@ const NotFound = () => (
       Please, check back again later!
     </div>
     <div className={clsx(styles.not_found_actions, "flex-col sm:flex-row items-stretch sm:items-center text-center")}>
-      <Link className="button primary" href="/">
+      <LinkButton as={Link} className="primary" href="/">
         Return to Homepage
-      </Link>
+      </LinkButton>
       <div className="separator">OR</div>
-      <Link className="button secondary" href="https://nextjs.org/learn">
+      <LinkButton as={Link} href="https://nextjs.org/learn">
         Learn Next.js, maybe...?
-      </Link>
+      </LinkButton>
     </div>
   </div>
 )

@@ -15,33 +15,47 @@ interface Todo {
 
 type GroupedTodos = Record<TodoGroup, Todo[]>;
 
-type TodoFilter = 'all' | 'upcoming' | 'today' | 'done' | 'pin' | 'archive' | string
+type TodosFilter = (item: Todo) => boolean;
 
-interface Todos {
-  readonly title: string
-  readonly items: Todo[]
-  readonly grouped: GroupedTodos
+interface TodoSummary {
+  readonly upcoming: [number, number]
+  readonly today   : [number, number]
+  readonly done    : [number, number]
+  readonly pin     : [number, number]
+  readonly all     : [number, number]
+  readonly archive : [number, number]
+  readonly list    : Record<string, [number, number]>
 }
 
 interface Todos {
   readonly title: string
   readonly items: Todo[]
+  readonly summary: TodoSummary
 }
 
 interface SetTodos {
-  readonly title: string
   readonly items: Todo[]
 }
 
-interface SetItemCompleted {
-  id: string
-  completed: boolean
+interface SetTitle {
+  readonly title: string
 }
 
-interface ToggleItemPinned {
-  id: string
+interface SetSummary {
+  readonly summary: TodoSummary
+}
+
+interface SetCompleted {
+  readonly id: string
+  readonly completed: boolean
+}
+
+interface SetPinned {
+  readonly id: string
+  readonly stared: boolean
 }
 
 export type {
-  Writable, TodoGroup, Todo, Todos, GroupedTodos, SetTodos, SetItemCompleted, ToggleItemPinned, TodoFilter
+  Writable, TodoGroup, Todo, Todos, GroupedTodos, TodoSummary, TodosFilter,
+  SetTodos, SetTitle, SetSummary, SetCompleted, SetPinned
 };
