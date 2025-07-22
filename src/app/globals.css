@@ -5,6 +5,8 @@
 
 @theme inline {
   --font-sans: var(--font-andika);
+  --font-logo: var(--font-museo-moderno);
+
   --default-font-family: var(--font-sans);
 
   --gradient-text: var(--text-gradient);
@@ -19,6 +21,9 @@
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
   --color-secondary-hover: var(--secondary-hover);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent-hover: var(--accent-hover);
 
   --color-border: var(--border);
   --color-ring: var(--ring);
@@ -71,6 +76,10 @@ body { min-height:100% }
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);
   --secondary-hover: oklch(0.205 0 0 / 0.125);
+
+  --accent: oklch(0.652 0.19 253);
+  --accent-foreground: oklch(0.985 0 0);
+  --accent-hover: oklch(0.652 0.19 253 / 0.875);
 
   --border: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);

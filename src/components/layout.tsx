@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { usePathname } from 'next/navigation';
 
+import { Logo } from '@/components/logo';
 import { Navbar } from '@/components/navbar';
 import { Footer } from '@/components/footer';
 import { useAppSelector } from '@/state/hook';
@@ -33,7 +34,7 @@ const Layout = ({ className, footer, navbar, sidebar, children, ...props }: Layo
     <div {...props} className={cx(styles.layout, className)}>
       {sidebar !== false
         ? <Sidebar
-            logo="Todoku"
+            logo={<Logo className="layout-logo" />}
             footer={
               <Sidebar.Menu>
                 <Sidebar.MenuItem icon={<SettingsIcon />} text="Settings" />

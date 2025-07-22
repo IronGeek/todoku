@@ -1,0 +1,18 @@
+.logo {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+
+  font-size: 1em;
+  font-weight: 700;
+
+  :global(.logo-symbol) {
+    font-family: var(--font-logo);
+    font-weight: bold;
+    font-size: 1em;
+  }
+
+  :global(.logo-accent) {
+    color: var(--accent);
+  }
+}
