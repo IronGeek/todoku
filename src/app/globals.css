@@ -1,0 +1,80 @@
+@import 'tailwindcss';
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-sans: var(--font-andika);
+  --default-font-family: var(--font-sans);
+
+  --gradient-text: var(--text-gradient);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-hover: var(--hover);
+
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-hover: var(--primary-hover);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary-hover: var(--secondary-hover);
+
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+}
+
+@utility text-gradient {
+  background: var(--gradient-text);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@utility text-gradient-* {
+  background: --value(--gradient-text-*);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+html { height:100% }
+body { min-height:100% }
+
+:root {
+  --app-sidebar-width: 15rem;
+  --app-navbar-height: 4rem;
+  --app-footer-height: 5rem;
+
+  --text-gradient: linear-gradient(180deg, #555555, #0a0a0a);
+
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --hover: oklch(0.145 0 0 / 0.125);
+
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --primary-hover: oklch(0.205 0 0 / 0.875);
+
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --secondary-hover: oklch(0.205 0 0 / 0.125);
+
+  --border: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+}

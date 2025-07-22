@@ -1,5 +1,5 @@
 .list {
-  border: 1px solid var(--app-border-color);
+  border: 1px solid var(--border);
   border-radius: .375rem;
 
   padding: .5rem 1rem;
@@ -17,7 +17,7 @@
     }
 
     :global(.todo-list-badge) {
-      border: 1px solid var(--app-border-color);
+      border: 1px solid var(--border);
       border-radius: .25rem;
 
       font-size: .75em;

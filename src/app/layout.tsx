@@ -3,7 +3,7 @@ import { clsx } from 'clsx';
 import { fonts } from '@/ui/fonts';
 import { AppStateProvider } from '@/state/provider'
 
-import '@/app/globals.scss';
+import '@/app/globals.css';
 
 const RootLayout = ({ children }) => (
   <html

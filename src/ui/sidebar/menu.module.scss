@@ -6,7 +6,7 @@
 
   &:not(:last-of-type) {
     margin-bottom: 1.5rem;
-    border-bottom: 1px dashed var(--app-border-color);
+    border-bottom: 1px dashed var(--border);
   }
 
   :global(.sidebar-menu-header) {

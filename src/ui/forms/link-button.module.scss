@@ -8,7 +8,7 @@
   cursor: pointer;
 
   border-radius: .5rem;
-  border: 1px solid var(--app-border-color, #ddd);
+  border: 1px solid var(--border);
   padding: .375rem 1rem .5rem 1rem;
 
   &> svg {
@@ -16,15 +16,24 @@
   }
 
   &:hover {
-    background-color: var(--app-border-color, #ddd);
+    background-color: var(--hover);
   }
 
   &:global(.primary) {
-    background-color: var(--app-primary-color, #222);
-    color: #fff;
+    background-color: var(--primary);
+    color: var(--primary-foreground);
 
     &:hover {
-      background-color: var(--app-primary-hover, #383838);
+      background-color: var(--primary-hover);
+    }
+  }
+
+  &:global(.secondary) {
+    background-color: var(--secondary);
+    color: var(--secondary-foreground);
+
+    &:hover {
+      background-color: var(--secondary-hover);
     }
   }
 }

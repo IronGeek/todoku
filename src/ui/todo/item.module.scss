@@ -1,6 +1,6 @@
 .item {
   display: grid;
-  grid-template-columns: min-content min-content auto min-content;
+  grid-template-columns: max-content auto min-content;
   grid-auto-flow: row;
 
   gap: .5rem;
@@ -8,34 +8,20 @@
   padding: .5rem;
 
   &:not(:last-of-type) {
-    border-bottom: 1px dashed var(--app-border-color);
+    border-bottom: 1px dashed var(--border);
   }
 
   :global(.todo-item-desc), :global(.todo-item-meta) {
-    grid-column: 3;
+    grid-column: 2;
   }
 
   &:global(.completed .todo-item-title) {
     text-decoration: line-through;
   }
 
-  :global(.todo-item-pin) {
-    color: var(--app-border-color);
-
-    &:not(:disabled) {
-      cursor: pointer;
-    }
-
-    &:global(.pinned), &:hover {
-      color: currentColor;
-    }
-  }
-
-  :global(.todo-item-check) {
-
-  }
-
   :global(.todo-item-title) {
+    cursor: pointer;
+
     display: flex;
     align-items: center;
     gap: 1rem;
@@ -62,7 +48,7 @@
       gap: .5rem;
 
       span {
-        border: 1px solid var(--app-border-color);
+        border: 1px solid var(--border);
         border-radius: .25rem;
         padding: 0 .25rem;
       }
@@ -70,7 +56,17 @@
   }
 
   :global(.todo-item-actions) {
-    grid-column: 4;
+    display: flex;
+    gap: .25rem;
+    align-items: center;
+
+    grid-column: 1;
+    grid-row: 1;
+    align-self: center;
+  }
+
+  :global(.todo-item-expander) {
+    grid-column: 3;
     grid-row: 1;
     align-self: center;
   }
