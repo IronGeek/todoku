@@ -15,7 +15,7 @@ const DropdownLabel = ({
       data-slot="dropdown-menu-label"
       data-inset={inset}
       className={cx(
-        "px-2 py-1.5 text-sm font-bold data-[inset]:pl-8",
+        "px-2 py-1.5 font-bold data-[inset]:pl-8",
         className
       )}
       {...props}

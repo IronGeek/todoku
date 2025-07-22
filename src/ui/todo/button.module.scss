@@ -1,0 +1,19 @@
+.button {
+  cursor: pointer;
+  line-height: 1;
+
+  border: 0.125em dashed var(--border);
+  border-radius: .25rem;
+  color: var(--border);
+
+  padding: .125rem;
+
+  display: grid;
+  align-self: center;
+  place-content: center;
+
+  &:hover {
+    border: 0.125em dashed currentColor;
+    color: currentColor;
+  }
+}

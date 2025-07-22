@@ -16,6 +16,7 @@ import CalendarIcon from '@/ui/icons/calendar.svg';
 import TagIcon from '@/ui/icons/tag.svg';
 import CheckIcon from '@/ui/icons/check.svg';
 import CircleIcon from '@/ui/icons/circle.svg';
+import EditIcon from '@/ui/icons/edit.svg';
 import ChevronRightIcon from '@/ui/icons/chevron-right.svg';
 import ChevronDownIcon from '@/ui/icons/chevron-down.svg';
 import ChevronUpIcon from '@/ui/icons/chevron-up.svg';
@@ -23,5 +24,6 @@ import ChevronUpIcon from '@/ui/icons/chevron-up.svg';
 export {
   GitHubIcon, UpRightIcon, SignOutIcon, SettingsIcon, HashIcon, ListIcon, PlusIcon,
   ArchivedIcon, UpcomingIcon, TodayIcon, PinnedIcon, PinIcon, TaskIcon, CompletedIcon,
-  CalendarIcon, TagIcon, CheckIcon, CircleIcon, ChevronRightIcon, ChevronDownIcon, ChevronUpIcon
+  CalendarIcon, TagIcon, CheckIcon, CircleIcon, EditIcon,
+  ChevronRightIcon, ChevronDownIcon, ChevronUpIcon,
 };

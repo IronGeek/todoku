@@ -1,0 +1,22 @@
+.meta {
+  display: flex;
+  align-items: center;
+  font-size: .875em;
+
+  margin-bottom: .25rem;
+
+  gap: 1rem;
+  color: #666;
+
+  &> div {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+
+    span {
+      border: 1px solid var(--border);
+      border-radius: .25rem;
+      padding: 0 .25rem;
+    }
+  }
+}

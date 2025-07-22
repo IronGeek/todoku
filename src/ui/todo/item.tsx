@@ -1,120 +1,51 @@
 'use client';
 
-import { ChangeEvent, MouseEvent, useState, type ComponentProps } from "react";
-import { format } from "date-fns";
+import { ChangeEvent, MouseEvent, useState } from 'react';
+import { format } from 'date-fns';
 
-import { CalendarIcon, ChevronDownIcon, ChevronUpIcon, HashIcon, ListIcon, PinnedIcon, TagIcon } from "@/ui/icons";
-import { useAppDispatch } from "@/state/hook";
-import { setCompleted, setPinned } from "@/state/todo";
-import { CheckBox } from "@/ui/forms/checkbox";
-import { Dropdown } from "@/ui/dropdown";
+import { CalendarIcon, ChevronDownIcon, ChevronUpIcon, EditIcon, HashIcon, ListIcon, PinnedIcon, TagIcon } from '@/ui/icons';
+import { useAppDispatch } from '@/state/hook';
+import { AccordionHeader } from '@/ui/accordion/header';
+import { AccordionContent } from '@/ui/accordion/content';
+import { AccordionItem } from '@/ui/accordion/item';
+import { AccordionTrigger } from '@/ui/accordion/trigger';
+
+import { TodoMenu } from '@/ui/todo/menu';
+import { TodoActions, TodoCompleter, TodoPinner } from '@/ui/todo/actions';
+import { TodoMeta } from '@/ui/todo/meta';
+
 import { cx } from '@/ui/utils';
+import type { Todo } from '@/state/todo/types';
 
-import type { Todo } from "@/state/todo/types";
+import type { AccordionItemProps } from '@/ui/accordion/item';
 
 import styles from './item.module.scss';
+import { TodoButton } from './button';
 
-type TodoItemProps = ComponentProps<'div'> & {
-  item: Todo
+type TodoItemProps = Omit<AccordionItemProps, 'value'> & {
+  value: Todo
 }
 
-const TodoItem = ({ className, item, ...props }: TodoItemProps) => {
-  const dispatch = useAppDispatch();
-  const [expanded, setExpanded] = useState(false);
-  const handleExpand = (e: MouseEvent<HTMLDivElement | HTMLButtonElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
-
-    setExpanded((prev) => !prev);
-  };
-
-  const toggleCompleted = (id: string, completed: boolean) => {
-    dispatch(setCompleted({ id, completed }));
-  }
-
-  const handleComplete = (e: ChangeEvent<HTMLInputElement>) => {
-    const { value, checked } = e.currentTarget;
-
-    toggleCompleted(value, checked);
-  }
-
-  const handlePin = (e: ChangeEvent<HTMLInputElement>) => {
-    const { value, checked } = e.currentTarget;
-
-    dispatch(setPinned({ id: value, stared: checked }));
-  }
-
+const TodoItem = ({ className, value, ...props }: TodoItemProps) => {
   return (
-    <div {...props} className={cx(styles.item, "todo-item", { completed: item.done }, className)}>
-      <div className="todo-item-actions">
-        <Dropdown>
-          <Dropdown.Trigger className="todo-item-action todo-item-menu"><ListIcon /></Dropdown.Trigger>
-          <Dropdown.Content side="right" align="start">
-            <Dropdown.Label>Status</Dropdown.Label>
-            <Dropdown.Group>
-              <Dropdown.CheckboxItem
-                checked={item.done}
-                onCheckedChange={(completed) => toggleCompleted(item.id, completed)}>
-                Completed
-              </Dropdown.CheckboxItem>
-              <Dropdown.CheckboxItem
-                checked={item.stared}
-                onCheckedChange={(completed) => toggleCompleted(item.id, completed)}>
-                Pinned
-              </Dropdown.CheckboxItem>
-              <Dropdown.CheckboxItem
-                checked={item.list === 'archive'}
-                onCheckedChange={(completed) => toggleCompleted(item.id, completed)}>
-                Archived
-              </Dropdown.CheckboxItem>
-            </Dropdown.Group>
-            <Dropdown.Separator />
-            <Dropdown.Group>
-              <Dropdown.Label>Actions</Dropdown.Label>
-              <Dropdown.Sub>
-                <Dropdown.SubTrigger className="pl-8">Move To</Dropdown.SubTrigger>
-                <Dropdown.Portal>
-                  <Dropdown.SubContent>
-                    <Dropdown.Item>Personal</Dropdown.Item>
-                    <Dropdown.Item>Work</Dropdown.Item>
-                    <Dropdown.Item>Health</Dropdown.Item>
-                    <Dropdown.Item>Shopping</Dropdown.Item>
-                    <Dropdown.Separator />
-                    <Dropdown.Item>More...</Dropdown.Item>
-                  </Dropdown.SubContent>
-                </Dropdown.Portal>
-              </Dropdown.Sub>
-              <Dropdown.Item className="pl-8">Edit...</Dropdown.Item>
-              <Dropdown.Item className="pl-8">Delete</Dropdown.Item>
-            </Dropdown.Group>
-          </Dropdown.Content>
-        </Dropdown>
-        <CheckBox
-          className={cx("todo-item-action todo-item-pin", { pinned: item.stared })}
-          checked={item.stared} value={item.id} onChange={handlePin}>
-          <PinnedIcon />
-        </CheckBox>
-        <CheckBox className="todo-item-action todo-item-check" checked={item.done} value={item.id} onChange={handleComplete} />
-      </div>
-      <div className="todo-item-title bg-popover" onClick={handleExpand}>
-        {item.title}
-      </div>
-      {expanded
-        ? <>
-          <div className="todo-item-desc">{item.description}</div>
-          <div className="todo-item-meta">
-            <div><CalendarIcon />{format(new Date(item.due), 'dd LLL yyyy')}</div>
-            <div><HashIcon />{item.list}</div>
-            <div><TagIcon />{item.tags.map((tag) => <span key={tag}>{tag}</span>)}</div>
-          </div>
-        </>
-        : null}
-      <div className="todo-item-expander">
-        <button type="button" className="todo-item-action todo-item-expand" onClick={handleExpand}>
-          {expanded ? <ChevronUpIcon /> : <ChevronDownIcon />}
-        </button>
-      </div>
-    </div>
+    <AccordionItem {...props}
+      className={cx(styles.item, "todo-list-item", { completed: value.done }, className)}
+      value={value.id}
+    >
+      <AccordionHeader className="gap-2 [&[data-state=closed]>.todo-item-actions]:hidden">
+        <TodoCompleter value={value} />
+        <AccordionTrigger className="todo-item-title">{value.title}</AccordionTrigger>
+        <TodoActions>
+          <TodoPinner value={value} />
+          <TodoButton value={value}><EditIcon size="1.1em" /></TodoButton>
+        </TodoActions>
+        <TodoMenu value={value} />
+      </AccordionHeader>
+      <AccordionContent className="flex flex-col gap-4 px-6">
+        <div className="todo-item-desc">{value.description}</div>
+        <TodoMeta value={value} />
+      </AccordionContent>
+    </AccordionItem>
   )
 }
 

@@ -1,0 +1,5 @@
+.menu {
+  &:not(:disabled), &:not([disabled]) {
+    cursor: pointer;
+  }
+}

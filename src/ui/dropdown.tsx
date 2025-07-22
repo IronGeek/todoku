@@ -15,9 +15,11 @@ import { DropdownTrigger } from '@/ui/dropdown/trigger';
 
 import type { ComponentProps } from 'react'
 
+type DropdownProps = ComponentProps<typeof Root>;
+
 const Dropdown = ({
   ...props
-}: ComponentProps<typeof Root>) => {
+}: DropdownProps) => {
   return <Root data-slot="dropdown-menu" {...props} />
 }
 
@@ -35,3 +37,4 @@ Dropdown.SubTrigger = DropdownSubTrigger;
 Dropdown.Trigger = DropdownTrigger;
 
 export { Dropdown }
+export type { DropdownProps }

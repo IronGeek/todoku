@@ -1,77 +1,13 @@
 .item {
-  display: grid;
-  grid-template-columns: max-content auto min-content;
-  grid-auto-flow: row;
-
-  gap: .5rem;
-
-  padding: .5rem;
-
-  &:not(:last-of-type) {
-    border-bottom: 1px dashed var(--border);
-  }
-
-  :global(.todo-item-desc), :global(.todo-item-meta) {
-    grid-column: 2;
-  }
-
   &:global(.completed .todo-item-title) {
     text-decoration: line-through;
   }
 
   :global(.todo-item-title) {
-    cursor: pointer;
-
-    display: flex;
-    align-items: center;
-    gap: 1rem;
+    font-size: 1.0375em;
   }
 
   :global(.todo-item-desc) {
-    color: #222;
-    margin-bottom: .25rem;
-  }
-
-  :global(.todo-item-meta) {
-    display: flex;
-    align-items: center;
-    font-size: .875em;
-
-    margin-bottom: .25rem;
-
-    gap: 1rem;
-    color: #666;
-
-    &> div {
-      display: flex;
-      align-items: center;
-      gap: .5rem;
-
-      span {
-        border: 1px solid var(--border);
-        border-radius: .25rem;
-        padding: 0 .25rem;
-      }
-    }
-  }
-
-  :global(.todo-item-actions) {
-    display: flex;
-    gap: .25rem;
-    align-items: center;
-
-    grid-column: 1;
-    grid-row: 1;
-    align-self: center;
-  }
-
-  :global(.todo-item-expander) {
-    grid-column: 3;
-    grid-row: 1;
-    align-self: center;
-  }
-
-  :global(.todo-item-action:not([disabled])) {
-    cursor: pointer;
+    color: #343434;
   }
 }

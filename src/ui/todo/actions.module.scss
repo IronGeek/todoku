@@ -1,0 +1,5 @@
+.actions {
+  :global(.todo-item-action:not([disabled])) {
+    cursor: pointer;
+  }
+}

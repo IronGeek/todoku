@@ -1,29 +1,35 @@
-import type { ComponentProps, ReactNode } from "react";
+import { Accordion } from '@/ui/accordion';
 
-import type{ Todo } from "@/state/todo/types";
-import { cx } from '@/ui/utils';
+import { TodoHeader } from '@/ui/todo/header';
 import { TodoItem } from "@/ui/todo/item";
+import { TodoContent } from '@/ui/todo/content';
+import { cx } from '@/ui/utils';
+
+import type { ReactNode } from "react";
+import type{ Todo } from "@/state/todo/types";
+import type { AccordionSingleProps } from '@/ui/accordion';
 
 import styles from './list.module.scss';
 
-type TodoListProps = Omit<ComponentProps<'div'>, 'title'> & {
+type TodoListProps = Omit<AccordionSingleProps, 'type'> & {
+  readonly collapsible?: boolean
   readonly title?: ReactNode
   readonly items?: Todo[]
 }
 
-const TodoList = ({ className, title, items, ...props }: TodoListProps) => {
+const TodoList = ({ className, collapsible = true, title, items, ...props }: TodoListProps) => {
   return (
-    <div {...props} className={cx(styles.list, "todo-list", className)}>
-      <header className="todo-list-header">
+    <Accordion {...props} type="single" collapsible={collapsible} className={cx(styles.list, "todo-list", className)}>
+      <TodoHeader>
         <div className="todo-list-title">{title}</div>
         <div className="todo-list-badge">{items !== null ? items.length : 'loading'}</div>
-      </header>
-      <ol>
+      </TodoHeader>
+      <TodoContent>
         { items?.map((item) => (
-          <TodoItem key={item.id} item={item} />
+          <TodoItem key={item.id} value={item} />
         )) ?? null }
-      </ol>
-    </div>
+      </TodoContent>
+    </Accordion>
   )
 }
 

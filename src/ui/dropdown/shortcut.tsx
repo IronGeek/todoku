@@ -10,7 +10,7 @@ const DropdownShortcut = ({
     <span
       data-slot="dropdown-menu-shortcut"
       className={cx(
-        "text-muted-foreground ml-auto text-xs tracking-widest",
+        "text-muted-foreground ml-auto text-sm tracking-widest",
         className
       )}
       {...props}

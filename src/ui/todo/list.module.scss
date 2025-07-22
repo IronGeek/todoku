@@ -2,27 +2,19 @@
   border: 1px solid var(--border);
   border-radius: .375rem;
 
-  padding: .5rem 1rem;
+  padding: 1.5rem;
 
-  :global(.todo-list-header) {
-    display: flex;
-    align-items: center;
-    gap: .5rem;
+  :global(.todo-list-title) {
+    font-size: 1.125em;
+    font-weight: bold;
+  }
 
-    padding: .5rem;
+  :global(.todo-list-badge) {
+    border: 1px solid var(--border);
+    border-radius: .25rem;
 
-    :global(.todo-list-title) {
-      font-size: 1.125em;
-      font-weight: bold;
-    }
+    font-size: .75em;
 
-    :global(.todo-list-badge) {
-      border: 1px solid var(--border);
-      border-radius: .25rem;
-
-      font-size: .75em;
-
-      padding: .125rem .25rem;
-    }
+    padding: .125rem .25rem;
   }
 }
