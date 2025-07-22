@@ -3,7 +3,7 @@
 import { ChangeEvent, MouseEvent, useState, type ComponentProps } from "react";
 import { format } from "date-fns";
 
-import { CalendarIcon, CollapsedIcon, ExpandedIcon, HashIcon, ListIcon, PinnedIcon, TagIcon } from "@/ui/icons";
+import { CalendarIcon, ChevronDownIcon, ChevronUpIcon, HashIcon, ListIcon, PinnedIcon, TagIcon } from "@/ui/icons";
 import { useAppDispatch } from "@/state/hook";
 import { setCompleted, setPinned } from "@/state/todo";
 import { CheckBox } from "@/ui/forms/checkbox";
@@ -111,7 +111,7 @@ const TodoItem = ({ className, item, ...props }: TodoItemProps) => {
         : null}
       <div className="todo-item-expander">
         <button type="button" className="todo-item-action todo-item-expand" onClick={handleExpand}>
-          {expanded ? <ExpandedIcon /> : <CollapsedIcon />}
+          {expanded ? <ChevronUpIcon /> : <ChevronDownIcon />}
         </button>
       </div>
     </div>
