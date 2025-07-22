@@ -14,12 +14,12 @@
 
     a:hover {
       text-decoration: underline;
-      text-decoration-color: #903;
+      text-decoration-color: var(--accent);
       text-decoration-style: wavy;
     }
   }
 
   :global(.page-menu-item.active) {
-    color: #903;
+    color: var(--accent);
   }
 }
