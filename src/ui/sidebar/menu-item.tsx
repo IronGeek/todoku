@@ -1,8 +1,8 @@
 import { createElement, isValidElement } from 'react';
-import clsx from 'clsx';
 
 import { Link } from '@/components/link';
 import { HashIcon } from '@/ui/icons';
+import { cx } from '@/ui/utils';
 
 import styles from './menu-item.module.scss';
 
@@ -21,9 +21,9 @@ type SidebarMenuItemProps = ComponentProps<'li'> & {
 
 const SidebarMenuItem = ({ className, children, icon, badge, text, href = '#', replace, external, active, ...props }: SidebarMenuItemProps) => {
   return (
-    <li {...props} className={clsx(styles.item, "sidebar-menu-item", { active }, className)}>
+    <li {...props} className={cx(styles.item, "sidebar-menu-item", { active }, className)}>
       {isValidElement<HTMLElement>(icon)
-        ? createElement(icon.type, { ...icon.props, className: clsx("sidebar-menu-icon", icon.props.className) })
+        ? createElement(icon.type, { ...icon.props, className: cx("sidebar-menu-icon", icon.props.className) })
         : icon !== false
           ? <HashIcon className="sidebar-menu-icon" />
           : null }
@@ -31,13 +31,13 @@ const SidebarMenuItem = ({ className, children, icon, badge, text, href = '#', r
         {text
           ? <div className="sidebar-menu-text">{text}</div>
           : isValidElement<HTMLElement>(children)
-            ? createElement(children.type, { ...children.props, className: clsx("sidebar-menu-text", children.props.className) })
+            ? createElement(children.type, { ...children.props, className: cx("sidebar-menu-text", children.props.className) })
             : typeof children === 'string'
               ? <div className="sidebar-menu-text">{children}</div>
               : null}
       </Link>
       {isValidElement<HTMLElement>(badge)
-        ? createElement(badge.type, { ...badge.props, className: clsx("sidebar-menu-badge", badge.props.className) })
+        ? createElement(badge.type, { ...badge.props, className: cx("sidebar-menu-badge", badge.props.className) })
         : badge
           ? <div className="sidebar-menu-badge">{badge}</div>
           : null }

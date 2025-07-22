@@ -1,5 +1,6 @@
-import clsx from 'clsx';
-import { ComponentProps, ComponentType, createElement, HTMLAttributes, isValidElement, PropsWithChildren, ReactNode } from 'react';
+import { ComponentProps, ComponentType, createElement, HTMLAttributes, isValidElement, ReactNode } from 'react';
+
+import { cx } from '@/ui/utils';
 
 import styles from './link-button.module.scss';
 
@@ -12,9 +13,9 @@ type LinkButtonProps<T extends ComponentProps<'a'>> = T & {
 function LinkButton<T>({ as, className, children, ...props }: LinkButtonProps<T>) {
   const As = as;
   return As
-    ? <As { ...props } className={clsx(styles.button, "form-link-button", className)}>{children}</As>
+    ? <As { ...props } className={cx(styles.button, "form-link-button", className)}>{children}</As>
       : isValidElement<HTMLAnchorElement>(children)
-      ? createElement(children.type, { ...children.props, className: clsx(styles.button, "form-link-button", children.props.className) })
+      ? createElement(children.type, { ...children.props, className: cx(styles.button, "form-link-button", children.props.className) })
     : children;
 }
 

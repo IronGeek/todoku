@@ -1,6 +1,5 @@
-import clsx from 'clsx';
-
 import { ListIcon } from '@/ui/icons';
+import { cx } from '@/ui/utils';
 
 import type { ComponentProps } from 'react';
 
@@ -14,7 +13,7 @@ const SidebarToggler = ({ className, ...props }: SidebarTogglerProps) => {
     <button
       {...props}
       type="button"
-      className={clsx(styles.toggler, "sidebar-toggler", className)}
+      className={cx(styles.toggler, "sidebar-toggler", className)}
     ><ListIcon /></button>
   )
 };

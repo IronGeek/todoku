@@ -1,5 +1,4 @@
-import clsx from 'clsx';
-
+import { cx } from '@/ui/utils';
 import { SidebarMenu } from '@/ui/sidebar/menu';
 import { SidebarToggler } from '@/ui/sidebar/toggler';
 import { SidebarMenuItem } from '@/ui/sidebar/menu-item';
@@ -21,11 +20,11 @@ const Sidebar = ({ className, logo, footer, toggleSidebar, collapsed, children, 
   return (
     <div
       {...props}
-      className={clsx(styles.sidebar, { 'sidebar-hidden': collapsed }, className)}
+      className={cx(styles.sidebar, { 'sidebar-hidden': collapsed }, className)}
     >
       <header className="sidebar-header">
         { isValidElement<HTMLElement>(logo)
-          ? createElement(logo.type, { ...logo.props, className: clsx('sidebar-logo', logo.props.className) })
+          ? createElement(logo.type, { ...logo.props, className: cx('sidebar-logo', logo.props.className) })
           : <div>{logo}</div> }
         <SidebarToggler onClick={toggleSidebar} />
       </header>
@@ -33,7 +32,7 @@ const Sidebar = ({ className, logo, footer, toggleSidebar, collapsed, children, 
         {children}
       </div>
       { isValidElement<HTMLElement>(footer)
-        ? createElement(footer.type, { ... footer.props, className: clsx('sidebar-footer', footer.props.className) })
+        ? createElement(footer.type, { ... footer.props, className: cx('sidebar-footer', footer.props.className) })
         : <div className="sidebar-footer">{footer}</div> }
     </div>
   )

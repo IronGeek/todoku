@@ -1,4 +1,4 @@
-import clsx from 'clsx';
+import { cx } from '@/ui/utils';
 
 import { type ComponentProps, createElement, isValidElement, type ReactNode } from 'react';
 
@@ -11,11 +11,11 @@ type MainProps = Omit<ComponentProps<'div'>, 'title'> & {
 };
 
 const Main = ({ className, children, fullscreen, title, actions, ...props }: MainProps): ReactNode => (
-  <main {...props} className={clsx(styles.main, { fullscreen }, className)}>
+  <main {...props} className={cx(styles.main, { fullscreen }, className)}>
     <div className="main-toolbar">
       { isValidElement(title) ? title : title ? <h1 className="main-title">{title}</h1> : null }
       { isValidElement<ComponentProps<'div'>>(actions)
-        ? createElement(actions.type, { ...actions.props, className: clsx("main-actions", actions.props.className) })
+        ? createElement(actions.type, { ...actions.props, className: cx("main-actions", actions.props.className) })
         : actions
           ? <div className="main-actions">{actions}</div>
           : null }

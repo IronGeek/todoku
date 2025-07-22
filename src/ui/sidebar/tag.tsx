@@ -1,7 +1,7 @@
 import { createElement, isValidElement, useState } from 'react';
-import clsx from 'clsx';
 
 import { HashIcon } from '@/ui/icons';
+import { cx } from '@/ui/utils';
 
 import styles from './tag.module.scss';
 
@@ -45,20 +45,20 @@ const SidebarTag = ({ className, children, active = false, dark = false, icon = 
     <button
       {...props}
       type="button"
-      className={clsx(styles.tag, "sidebar-tag", { active: isActive, dark }, className)}
+      className={cx(styles.tag, "sidebar-tag", { active: isActive, dark }, className)}
       data-color={color || getRandomColor(dark)}
       onClick={handleClick}
       suppressHydrationWarning
     >
       {isValidElement<HTMLElement>(icon)
-        ? createElement(icon.type, { ...icon.props, className: clsx("sidebar-tag-icon", icon.props.className) })
+        ? createElement(icon.type, { ...icon.props, className: cx("sidebar-tag-icon", icon.props.className) })
         : icon !== false
           ? <HashIcon className="sidebar-tag-icon" />
           : null }
         {text
           ? <div className="sidebar-tag-text">{text}</div>
           : isValidElement<HTMLElement>(children)
-            ? createElement(children.type, { ...children.props, className: clsx("sidebar-tag-text", children.props.className) })
+            ? createElement(children.type, { ...children.props, className: cx("sidebar-tag-text", children.props.className) })
             : typeof children === 'string'
               ? <div className="sidebar-tag-text">{children}</div>
               : null}

@@ -1,5 +1,6 @@
-import clsx from 'clsx'
 import { ComponentProps } from 'react'
+
+import { cx } from '@/ui/utils';
 
 import styles from './checkbox.module.scss';
 
@@ -10,14 +11,14 @@ const CheckBox = ({ className, children, ...props }: CheckBoxProps) => {
   return (
     children
       ? <label
-          className={clsx(styles.label, "form-checkbox", className)}
+          className={cx(styles.label, "form-checkbox", className)}
         >
           <input {...props} type="checkbox" />
           {children}
         </label>
       : <input {...props}
           type="checkbox"
-          className={clsx(styles.input, "form-checkbox", className)} />
+          className={cx(styles.input, "form-checkbox", className)} />
   )
 }
 

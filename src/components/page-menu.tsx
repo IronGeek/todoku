@@ -1,9 +1,9 @@
 'use client'
 
-import clsx from 'clsx';
 import { usePathname } from 'next/navigation'
 
 import { Link } from '@/components/link';
+import { cx } from '@/ui/utils';
 import { GitHubIcon } from '@/ui/icons';
 
 import type { HTMLAttributes } from 'react';
@@ -17,8 +17,8 @@ const PageMenu = ({ className, ...props }: PageMenuProps) => {
   const pathname = usePathname()
 
   return (
-    <ol {...props} className={clsx(styles.menu, "page-menu", className)}>
-      <li className={clsx('page-menu-item', { active: pathname === '/' })}>
+    <ol {...props} className={cx(styles.menu, "page-menu", className)}>
+      <li className={cx('page-menu-item', { active: pathname === '/' })}>
         <Link title="Home" href="/">Home</Link>
       </li>
       <li className={styles.menu_item}>

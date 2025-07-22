@@ -1,7 +1,6 @@
 'use client';
 
 import { ChangeEvent, MouseEvent, useState, type ComponentProps } from "react";
-import clsx from "clsx";
 import { format } from "date-fns";
 
 import { CalendarIcon, CollapsedIcon, ExpandedIcon, HashIcon, ListIcon, PinnedIcon, TagIcon } from "@/ui/icons";
@@ -9,6 +8,7 @@ import { useAppDispatch } from "@/state/hook";
 import { setCompleted, setPinned } from "@/state/todo";
 import { CheckBox } from "@/ui/forms/checkbox";
 import { Dropdown } from "@/ui/dropdown";
+import { cx } from '@/ui/utils';
 
 import type { Todo } from "@/state/todo/types";
 
@@ -45,7 +45,7 @@ const TodoItem = ({ className, item, ...props }: TodoItemProps) => {
   }
 
   return (
-    <div {...props} className={clsx(styles.item, "todo-item", { completed: item.done }, className)}>
+    <div {...props} className={cx(styles.item, "todo-item", { completed: item.done }, className)}>
       <div className="todo-item-actions">
         <Dropdown>
           <Dropdown.Trigger className="todo-item-action todo-item-menu"><ListIcon /></Dropdown.Trigger>
@@ -90,7 +90,7 @@ const TodoItem = ({ className, item, ...props }: TodoItemProps) => {
           </Dropdown.Content>
         </Dropdown>
         <CheckBox
-          className={clsx("todo-item-action todo-item-pin", { pinned: item.stared })}
+          className={cx("todo-item-action todo-item-pin", { pinned: item.stared })}
           checked={item.stared} value={item.id} onChange={handlePin}>
           <PinnedIcon />
         </CheckBox>

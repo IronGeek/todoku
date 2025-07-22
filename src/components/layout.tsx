@@ -1,18 +1,18 @@
 'use client';
 
-import clsx from 'clsx';
 import { useState } from 'react';
+import { usePathname } from 'next/navigation';
 
 import { Navbar } from '@/components/navbar';
 import { Footer } from '@/components/footer';
+import { useAppSelector } from '@/state/hook';
+import { Sidebar } from '@/ui/sidebar';
+import { ArchivedIcon, CompletedIcon, PinIcon, PlusIcon, SettingsIcon, SignOutIcon, TaskIcon, TodayIcon, UpcomingIcon } from '@/ui/icons';
+import { cx } from '@/ui/utils';
 
 import type { HTMLAttributes, PropsWithChildren, ReactNode } from 'react';
 
 import styles from './layout.module.scss';
-import { Sidebar } from '@/ui/sidebar';
-import { ArchivedIcon, CompletedIcon, PinIcon, PlusIcon, SettingsIcon, SignOutIcon, TaskIcon, TodayIcon, UpcomingIcon } from '@/ui/icons';
-import { usePathname } from 'next/navigation';
-import { useAppSelector } from '@/state/hook';
 
 type LayoutProps = PropsWithChildren<HTMLAttributes<HTMLDivElement>> & {
   readonly footer?: boolean
@@ -30,7 +30,7 @@ const Layout = ({ className, footer, navbar, sidebar, children, ...props }: Layo
   };
 
   return (
-    <div {...props} className={clsx(styles.layout, className)}>
+    <div {...props} className={cx(styles.layout, className)}>
       {sidebar !== false
         ? <Sidebar
             logo="Todoku"

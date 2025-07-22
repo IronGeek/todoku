@@ -1,12 +1,12 @@
-import clsx from 'clsx';
 import { ComponentProps, useMemo } from 'react';
 import { useParams } from 'next/navigation';
 import { titleCase } from 'title-case';
 
 import { useAppSelector } from '@/state/hook';
+import { TodoSummary } from '@/state/todo/types';
+import { cx } from '@/ui/utils';
 
 import styles from './page-title.module.scss';
-import { TodoSummary } from '@/state/todo/types';
 
 type PageTitleProps = ComponentProps<'div'>;
 
@@ -27,7 +27,7 @@ const PageTitle = ({ className, ...props }: PageTitleProps) => {
   }, [summary, type]);
 
   return (
-    <div {...props} className={clsx(styles.title, "page-title", className)}>
+    <div {...props} className={cx(styles.title, "page-title", className)}>
       <div>{titleCase(title)}</div>
       { total > 0 ? <div className="count">{completed}<span className="page-title-separator">/</span>{total}</div> : null }
     </div>

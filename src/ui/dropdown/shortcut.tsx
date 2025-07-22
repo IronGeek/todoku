@@ -1,4 +1,4 @@
-import clsx from 'clsx'
+import { cx } from '@/ui/utils';
 
 import type { ComponentProps } from 'react'
 
@@ -9,7 +9,7 @@ const DropdownShortcut = ({
   return (
     <span
       data-slot="dropdown-menu-shortcut"
-      className={clsx(
+      className={cx(
         "text-muted-foreground ml-auto text-xs tracking-widest",
         className
       )}

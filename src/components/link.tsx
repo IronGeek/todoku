@@ -1,6 +1,7 @@
-import clsx from 'clsx';
-import { UpRightIcon } from '@/ui/icons';
 import NextLink from 'next/link';
+
+import { UpRightIcon } from '@/ui/icons';
+import { cx } from '@/ui/utils';
 
 import type { LinkProps as NextLinkProps } from 'next/link';
 import type { ComponentProps } from 'react';
@@ -13,7 +14,7 @@ type LinkProps = NextLinkProps & Omit<ComponentProps<'a'>, 'href'> & {
 
 const Link = ({ className, external, children, ...props }: LinkProps) => {
   return (
-    <NextLink {...props} className={clsx(styles.link, "link", className)}>
+    <NextLink {...props} className={cx(styles.link, "link", className)}>
       {children}
       { external ? <UpRightIcon className="link-icon" /> : null }
     </NextLink>

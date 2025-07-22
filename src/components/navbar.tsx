@@ -1,8 +1,7 @@
-import clsx from 'clsx';
-
-import { Sidebar } from '@/ui/sidebar';
 import { PageTitle } from '@/components/page-title';
 import { PageMenu } from '@/components/page-menu';
+import { Sidebar } from '@/ui/sidebar';
+import { cx } from '@/ui/utils';
 
 import type { ComponentProps, MouseEventHandler } from 'react';
 
@@ -16,7 +15,7 @@ type NavbarProps = ComponentProps<'div'> & {
 const Navbar = ({ className, toggleSidebar, sidebarCollapsed, ...props }: NavbarProps) => (
   <div
     {...props}
-    className={clsx(styles.navbar, "navbar", className)}
+    className={cx(styles.navbar, "navbar", className)}
   >
     <div className="navbar-left">
       {sidebarCollapsed ? <Sidebar.Toggler onClick={toggleSidebar} /> : null }

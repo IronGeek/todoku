@@ -1,8 +1,8 @@
-import clsx from "clsx";
-import { TodoItem } from "@/ui/todo/item";
-
 import type { ComponentProps, ReactNode } from "react";
+
 import type{ Todo } from "@/state/todo/types";
+import { cx } from '@/ui/utils';
+import { TodoItem } from "@/ui/todo/item";
 
 import styles from './list.module.scss';
 
@@ -13,7 +13,7 @@ type TodoListProps = Omit<ComponentProps<'div'>, 'title'> & {
 
 const TodoList = ({ className, title, items, ...props }: TodoListProps) => {
   return (
-    <div {...props} className={clsx(styles.list, "todo-list", className)}>
+    <div {...props} className={cx(styles.list, "todo-list", className)}>
       <header className="todo-list-header">
         <div className="todo-list-title">{title}</div>
         <div className="todo-list-badge">{items !== null ? items.length : 'loading'}</div>
