@@ -12,7 +12,7 @@ const  AppStateProvider = ({ children, ...props }: AppStateProviderProps) => {
   return (
     <SessionProvider>
       <Provider {...props} store={store}>{children}</Provider>
-      </SessionProvider>
+    </SessionProvider>
   );
 };
 
