@@ -1,0 +1,5 @@
+.main {
+  background-image: url('/bg.svg');
+  background-size: contain;
+  background-repeat: repeat;
+}

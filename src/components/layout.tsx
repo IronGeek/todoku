@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 
 import { Logo } from '@/components/logo';
@@ -14,6 +14,7 @@ import { cx } from '@/ui/utils';
 import type { HTMLAttributes, PropsWithChildren, ReactNode } from 'react';
 
 import styles from './layout.module.scss';
+import { signOut, useSession } from 'next-auth/react';
 
 type LayoutProps = PropsWithChildren<HTMLAttributes<HTMLDivElement>> & {
   readonly footer?: boolean
@@ -22,6 +23,8 @@ type LayoutProps = PropsWithChildren<HTMLAttributes<HTMLDivElement>> & {
 };
 
 const Layout = ({ className, footer, navbar, sidebar, children, ...props }: LayoutProps): ReactNode => {
+  const { data: session, status } = useSession();
+
   const pathname = usePathname();
   const summary = useAppSelector((state) => state.todos.summary);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
@@ -38,7 +41,9 @@ const Layout = ({ className, footer, navbar, sidebar, children, ...props }: Layo
             footer={
               <Sidebar.Menu>
                 <Sidebar.MenuItem icon={<SettingsIcon />} text="Settings" />
-                <Sidebar.MenuItem icon={<SignOutIcon />} text="Sign out" />
+                { status === 'authenticated'
+                  ? <Sidebar.MenuItem icon={<SignOutIcon />} text="Sign out" onClick={() => { signOut({ callbackUrl: '/' }) }} />
+                  : null }
               </Sidebar.Menu>
             }
             className="layout-sidebar"
@@ -46,11 +51,11 @@ const Layout = ({ className, footer, navbar, sidebar, children, ...props }: Layo
             toggleSidebar={collapseSidebar}>
             <Sidebar.Menu header="Tasks">
               <Sidebar.MenuItem
-                active={pathname == '/'}
+                active={pathname == '/home'}
                 icon={<TaskIcon />}
                 badge={summary?.all[1] ?? '...'}
-                href="/"
-                text="All" />
+                href="/home"
+                text="Home" />
               <Sidebar.MenuItem
                 active={pathname == '/upcoming'}
                 icon={<UpcomingIcon />}

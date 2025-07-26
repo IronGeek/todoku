@@ -1,5 +1,6 @@
 'use client';
 
+import { SessionProvider } from 'next-auth/react';
 import { Provider } from 'react-redux';
 import { store } from '@/state/store';
 
@@ -9,7 +10,9 @@ type AppStateProviderProps = Omit<ProviderProps, 'store'>;
 
 const  AppStateProvider = ({ children, ...props }: AppStateProviderProps) => {
   return (
-    <Provider {...props} store={store}>{children}</Provider>
+    <SessionProvider>
+      <Provider {...props} store={store}>{children}</Provider>
+      </SessionProvider>
   );
 };
 

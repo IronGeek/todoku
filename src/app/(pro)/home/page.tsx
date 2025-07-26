@@ -1,31 +1,34 @@
 'use client';
 
-import { Main } from '@/components/main';
-import { TodoList } from '@/ui/todo/list';
-import { getTodosFilter, getTodosTitle, groupTodos, resolveSlug } from '@/services/todo';
-import { Todo } from '@/state/todo/types';
-import { useAppDispatch, useAppSelector } from '@/state/hook';
 import { useEffect, useMemo } from 'react';
-import { useParams } from 'next/navigation';
+import { useSession } from 'next-auth/react';
+
+import { Main } from '@/components/main';
+import { groupTodos } from '@/services/todo';
+import { useAppDispatch, useAppSelector } from '@/state/hook';
 import { setTitle } from '@/state/todo';
+import { Todo } from '@/state/todo/types';
+import { TodoList } from '@/ui/todo/list';
 
 const Page = () => {
-  const { slug } = useParams();
-  const listOrCategory = resolveSlug(slug);
+  const { data: session, status } = useSession();
+
   const dispatch = useAppDispatch();
   const items: Todo[] = useAppSelector((state)=> state.todos.items);
-
   const grouped = useMemo(() => {
-    const filtered = items?.filter(getTodosFilter(listOrCategory))
-    return groupTodos(filtered ?? []);
+    return groupTodos(items ?? []);
   }, [items]);
 
   useEffect(() => {
-    dispatch(setTitle({ title: getTodosTitle(listOrCategory) }))
-  }, [slug]);
+    dispatch(setTitle({ title: 'All Tasks' }))
+  }, []);
+
+  if (status === 'loading' || status !== 'authenticated') { return null }
 
   return (
-    <Main className="gap-8">
+    <Main className="gap-8" actions={
+      <button className="button">New Task</button>
+    }>
       { grouped.today.length > 0 ? <TodoList title="Today" items={grouped.today} /> : null }
       <div className="grid gap-8 xl:grid-cols-2">
         { grouped.tomorrow.length > 0 ? <TodoList className="self-start" title="Tomorrow" items={grouped.tomorrow} /> : null }

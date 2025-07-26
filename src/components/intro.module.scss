@@ -1,0 +1,80 @@
+.intro {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+
+  margin-top: 1.5rem;
+}
+
+.container {
+  position: relative;
+
+  flex: 1;
+}
+
+.profile_image {
+  border-radius: 50%;
+  margin-top: -4rem;
+}
+
+.greetings {
+  position: relative;
+  display: inline-block;
+
+  font-family: var(--font-schoolbell);
+  font-size: max(2rem, min(3.5vw, 2.5rem));
+  color: #903;
+
+  padding: 0 1rem;
+  margin-bottom: -1rem;
+
+  transform: rotate(-10deg) translate(-.5rem, 0);
+  transform-origin: 0;
+
+  z-index: 99;
+}
+
+.intro_name {
+  position: relative;
+
+  font-weight: 800;
+  font-size: max(4rem, min(6vw, 5.5rem));
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+
+  margin-bottom: 1rem;
+}
+
+.intro_title {
+  font-size: max(1.25rem, min(2.5vw, 1.75rem));
+  margin-bottom: 2rem;
+}
+
+.intro_bio {
+  font-size: max(1.1rem, min(2vw, 1.375rem));
+
+  color: #666;
+  letter-spacing: -0.01em;
+
+  p {
+    text-align: justify;
+    margin-bottom: 1rem;
+  }
+
+  strong {
+    font-weight: normal;
+    color: #903;
+
+    border: 1px dotted #ddd;
+    border-radius: .25rem;
+    padding: .125rem .25rem;
+  }
+}
+
+.intro_actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
