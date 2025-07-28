@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 import Link from 'next/link'
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
@@ -20,7 +20,9 @@ const Page = () => {
   });
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleLogin = async () => {
+  const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
     setIsLoading(true);
     const res = await signIn("credentials", {
       redirect: false,
@@ -29,23 +31,21 @@ const Page = () => {
     });
 
     if (res?.error) {
-      console.log("Login error:", res.error);
-      setAlert({
-        type: "error",
-        message: res.error,
-        isShow: true
-      });
-      setIsLoading(false);
+      const message = res.error === 'CredentialsSignin'
+        ? 'Invalid username or password.'
+        : `An unexpected error occurred: ${res.error}`;
+
+      setAlert({ type: "error", message, isShow: true });
     } else {
       router.push('/home');
-      setIsLoading(false);
     }
+    setIsLoading(false);
   };
 
   return (
     <section className="h-screen flex items-center justify-center">
       <div className="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow-sm sm:p-6 md:p-8">
-        <form className="space-y-6" action="#">
+        <form className="space-y-6" onSubmit={handleLogin}>
             <h5 className="flex gap-1 text-2xl font-medium text-gray-900">Sign in to <Logo className="mb-[-.25rem]" /></h5>
             {alert.isShow && <Alert type={alert.type} message={alert.message} />}
             <div>
@@ -71,14 +71,15 @@ const Page = () => {
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                   required
                   value={password}
+                  minLength={6}
+                  maxLength={60}
                   onChange={(e) => setPassword(e.target.value)}
                 />
             </div>
             <button
-              type="button"
+              type="submit"
               className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center flex items-center justify-center gap-3 cursor-pointer"
               disabled={isLoading}
-              onClick={handleLogin}
             >
               { isLoading ? 'Loading' : 'Login to your account' }
               { isLoading && (<Spinner />) }

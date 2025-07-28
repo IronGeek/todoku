@@ -1,5 +1,13 @@
-import NextAuth from 'next-auth';
+import NextAuth, { CredentialsSignin } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
+
+class CredentialsError extends CredentialsSignin {
+  constructor(error?: Error) {
+    super('credentials', { cause: error });
+    this.code = 'credentials';
+    this.stack = undefined;
+  }
+}
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
   providers: [
@@ -24,7 +32,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
           return await response.json();
         }
 
-        throw new Error('Invalid crendtials');
+        throw new CredentialsError();
       },
     }),
   ],

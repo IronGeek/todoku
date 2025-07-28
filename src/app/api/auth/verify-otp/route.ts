@@ -1,28 +1,25 @@
-import { prisma } from '@/lib/prisma';
+import { z } from 'zod';
+
+import { verifyUserOTP } from '@/services/db';
 
 const  POST = async (req: Request) => {
-  const { email, otp } = await req.json();
+  try {
+    const data = await req.json();
 
-  const user = await prisma.users.findUnique({ where: { email } });
-  if (!user) { return Response.json({ message: 'User not found' }, { status: 404 }) }
+    const schema = z.object({
+      email: z.email(),
+      otp: z.string(),
+    });
 
-  const otpRecord = await prisma.otps.findFirst({
-    where: {
-      userId: user.id,
-      code: otp,
-      expiry: { gte: new Date() },
-    },
-  });
+    const { email, otp } = schema.parse(data);
 
-  if (!otpRecord) { return Response.json({ message: 'Invalid or expired OTP' }, { status: 400 }) }
+    const verified =await verifyUserOTP(email, otp);
+    if (!verified) { return Response.json({ error: 'Invalid or expired OTP' }, { status: 400 }) }
 
-  await prisma.otps.delete({ where: { id: otpRecord.id } });
-  await prisma.users.update({
-    where: { id: user.id },
-    data: { verifiedAt: new Date() },
-  });
-
-  return Response.json({ message: 'OTP verified' });
+    return Response.json({ message: 'OTP verified' }, { status: 200 });
+  } catch (err) {
+    return Response.json({ error: err.message }, { status: 500 });
+  }
 }
 
 export { POST };

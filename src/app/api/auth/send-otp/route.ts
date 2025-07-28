@@ -1,40 +1,35 @@
-import nodemailer from 'nodemailer';
-import { prisma } from '@/lib/prisma';
+import { z } from 'zod';
+
+import { createUserOTP } from '@/services/db';
+import { sendMail } from '@/services/mail';
 
 const POST = async (req: Request) => {
-  const { email } = await req.json();
+  try {
+    const data = await req.json();
 
-  const user = await prisma.users.findUnique({ where: { email } });
-    if (!user) { return Response.json({ message: "User not found" }, { status: 404 }) }
+    const schema = z.object({
+      email: z.email(),
+      reason: z.string().optional()
+    });
 
-  const otp = Math.floor(100000 + Math.random() * 900000).toString();
-  const expiry = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
+    const { email, reason } = schema.parse(data);
+    const timeout = parseInt(process.env.OTP_TIMEOUT, 10);
+    const otp = await createUserOTP(email, reason, timeout);
 
-  await prisma.otps.create({
-    data: {
-      code: otp,
-      expiry,
-      userId: user.id,
-    },
-  });
+    if (email && otp) {
+      await sendMail({
+        to: email,
+        subject: 'Your OTP Code',
+        text: `Your OTP is ${otp}. It will expire in ${timeout} minutes.`,
+      });
 
-  // send email
-  const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      user: process.env.EMAIL_FROM,
-      pass: process.env.EMAIL_PASSWORD,
+      return Response.json(null, { status: 200 });
     }
-  });
 
-  await transporter.sendMail({
-    from: process.env.EMAIL_FROM,
-    to: email,
-    subject: 'Your OTP Code',
-    text: `Your OTP is ${otp}. It will expire in 10 minutes.`,
-  });
-
-  return Response.json({ message: "OTP sent" });
+    return Response.json({ message: "OTP sent" }, { status: 200 });
+  } catch (error) {
+    return Response.json({ error }, { status: 500 });
+  }
 }
 
 export { POST }

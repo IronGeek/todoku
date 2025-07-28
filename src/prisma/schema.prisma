@@ -5,8 +5,8 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
-  output   = "../lib/prisma/client"
+  provider = "prisma-client"
+  output   = "../lib/prisma"
 }
 
 datasource db {
@@ -14,23 +14,28 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model users {
-  id         String    @id @default(cuid())
-  name       String
-  email      String    @unique
-  password   String
-  verifiedAt DateTime?
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
-  otps       otps[]
+model User {
+  id         String    @id @default(cuid(2))                @db.VarChar(36)
+  name       String                                         @db.VarChar(64)
+  email      String    @unique                              @db.VarChar(255)
+  password   String                                         @db.VarChar(60)
+  otp        OTP?
+  verifiedAt DateTime? @map("verified_at")                  @db.Timestamptz(3)
+  createdAt  DateTime  @map("created_at") @default(now())   @db.Timestamptz(3)
+  updatedAt  DateTime? @map("updated_at") @updatedAt        @db.Timestamptz(3)
+  deletedAt  DateTime? @map("deleted_at")                   @db.Timestamptz(3)
+
+  @@map("user")
 }
 
-model otps {
-  id         String    @id @default(cuid())
-  code       String
-  expiry     DateTime
-  userId     String
-  user       users     @relation(fields: [userId], references: [id])
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
+model OTP {
+  id         String    @id @default(cuid(2))                @db.VarChar(36)
+  user       User      @relation(fields: [userId], references: [id])
+  userId     String    @map("user_id") @unique              @db.VarChar(36)
+  code       String                                         @db.VarChar(60)
+  note       String?                                        @db.VarChar(255)
+  expiredAt  DateTime? @map("expired_at")                   @db.Timestamptz(3)
+  createdAt  DateTime  @map("created_at") @default(now())   @db.Timestamptz(3)
+
+  @@map("otp")
 }
