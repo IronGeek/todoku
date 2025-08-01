@@ -7,6 +7,10 @@ import { useRouter } from 'next/navigation';
 import { Spinner } from "@/components/spinner";
 import { Alert } from "@/components/alert";
 import { Logo } from '@/components/logo';
+import { Button } from '@/ui/forms/button';
+
+import styles from './page.module.scss';
+import { cx } from '@/ui/utils';
 
 const Page = () => {
   const [registerEmail, setRegisterEmail] = useState('');
@@ -59,15 +63,15 @@ const Page = () => {
   };
 
   return (
-    <section className="h-screen flex items-center justify-center">
+    <section className={cx(styles.section, "h-screen flex items-center justify-center")}>
       <div className="w-full max-w-md p-4 bg-white border border-gray-200 rounded-lg shadow-sm sm:p-6 md:p-8">
         <form className="space-y-6" onSubmit={handleRegister}>
-          <h5 className="flex gap-1 text-2xl font-medium text-gray-900">Sign up to <Logo className="mb-[-.25rem]" /></h5>
+          <h5 className="flex gap-1 text-2xl font-medium text-gray-900">Daftar ke <Logo className="mb-[-.25rem]" /></h5>
           {alert.isShow && (
             <Alert type={alert.type} message={alert.message} />
           )}
           <div>
-            <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900">Your name</label>
+            <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900">Nama</label>
             <input
               type="text"
               name="name"
@@ -81,7 +85,7 @@ const Page = () => {
             />
           </div>
           <div>
-            <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900">Your email</label>
+            <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900">Email</label>
             <input
               type="email"
               name="email"
@@ -95,7 +99,7 @@ const Page = () => {
             />
           </div>
           <div>
-            <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900">Your password</label>
+            <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900">Password</label>
             <input
               type="password"
               name="password"
@@ -109,15 +113,18 @@ const Page = () => {
               required
             />
           </div>
-          <button
+          <Button
             type="submit"
-            className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center cursor-pointer flex items-center gap-3 justify-center"
+            className="w-full primary"
           >
-            {isLoading ? 'Loading' : 'Register to your account'}
+            {isLoading ? 'Loading' : 'Daftarkan akunmu'}
             {isLoading && (<Spinner />)}
-          </button>
+          </Button>
+          <div className="text-sm font-medium text-gray-500 mb-2">
+            Sudah punya akun? <Link href="/signin" className="text-blue-700 hover:underline">Masuk ke akunmu</Link>
+          </div>
           <div className="text-sm font-medium text-gray-500">
-            Already have account? <Link href="/signin" className="text-blue-700 hover:underline">Signin to your account</Link>
+            Kembali ke <Link href="/" className="text-blue-700 hover:underline">Homepage</Link>
           </div>
         </form>
       </div>

@@ -8,6 +8,10 @@ import { useRouter } from 'next/navigation';
 import { Spinner } from '@/components/spinner';
 import { Alert } from '@/components/alert';
 import { Logo } from '@/components/logo';
+import { cx } from '@/ui/utils';
+
+import styles from './page.module.scss';
+import { Button } from '@/ui/forms/button';
 
 const Page = () => {
   const router = useRouter(); // tambahkan ini
@@ -43,13 +47,13 @@ const Page = () => {
   };
 
   return (
-    <section className="h-screen flex items-center justify-center">
+    <section className={cx(styles.section, "h-screen flex items-center justify-center")}>
       <div className="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow-sm sm:p-6 md:p-8">
         <form className="space-y-6" onSubmit={handleLogin}>
-            <h5 className="flex gap-1 text-2xl font-medium text-gray-900">Sign in to <Logo className="mb-[-.25rem]" /></h5>
+            <h5 className="flex gap-1 text-2xl font-medium text-gray-900">Sign in ke <Logo className="mb-[-.25rem]" /></h5>
             {alert.isShow && <Alert type={alert.type} message={alert.message} />}
             <div>
-                <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900">Your email</label>
+                <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900">Email</label>
                 <input
                   type="email"
                   name="email"
@@ -62,7 +66,7 @@ const Page = () => {
                 />
             </div>
             <div>
-                <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900">Your password</label>
+                <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900">Password</label>
                 <input
                   type="password"
                   name="password"
@@ -76,16 +80,19 @@ const Page = () => {
                   onChange={(e) => setPassword(e.target.value)}
                 />
             </div>
-            <button
+            <Button
               type="submit"
-              className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center flex items-center justify-center gap-3 cursor-pointer"
+              className="w-full button primary"
               disabled={isLoading}
             >
-              { isLoading ? 'Loading' : 'Login to your account' }
+              { isLoading ? 'Loading' : 'Login ke akunmu' }
               { isLoading && (<Spinner />) }
-            </button>
+            </Button>
+            <div className="text-sm font-medium text-gray-500 mb-2">
+                Belum terdaftar? <Link href="/signup" className="text-blue-700 hover:underline">Buat akun</Link>
+            </div>
             <div className="text-sm font-medium text-gray-500">
-                Not registered? <Link href="/signup" className="text-blue-700 hover:underline">Create account</Link>
+                Kembali ke <Link href="/" className="text-blue-700 hover:underline">Homepage</Link>
             </div>
         </form>
       </div>

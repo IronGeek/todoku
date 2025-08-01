@@ -6,6 +6,11 @@ import { useRouter } from 'next/navigation';
 import { Spinner } from '@/components/spinner';
 import { Alert } from '@/components/alert';
 
+import styles from './page.module.scss';
+import { cx } from '@/ui/utils';
+import { Button } from '@/ui/forms/button';
+import Link from 'next/link';
+
 export default function Page(){
   const [email, setEmail] = useState('');
   const [otp, setOtp] = useState('');
@@ -92,12 +97,12 @@ export default function Page(){
   };
 
   return (
-    <section className="h-screen flex items-center justify-center">
+    <section className={cx(styles.section, "h-screen flex items-center justify-center")}>
       <div className="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow-sm sm:p-6 md:p-8">
         <form className="" onSubmit={verifyOtp}>
             <div className="mb-3">
-              <h5 className="text-xl font-medium text-gray-900 text-center mb-2">Enter verification OTP</h5>
-              <p className="text-center text-[14px] text-gray-500 mb-2">We&apos;ve send a code to <span className="font-bold text-gray-700">{email}</span></p>
+              <h5 className="text-xl font-medium text-gray-900 text-center mb-2">Masukkan verifikasi OTP</h5>
+              <p className="text-center text-[14px] text-gray-500 mb-2">Kami sudah mengirim kode ke <span className="font-bold text-gray-700">{email}</span></p>
               { alert.isShow && (
                 <Alert type={alert.type}  message={alert.message} />
               )}
@@ -108,7 +113,7 @@ export default function Page(){
                   type="text"
                   name="otp"
                   id="otp"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 text-center tracking-widest"
                   placeholder="______"
                   value={otp}
                   maxLength={6}
@@ -116,18 +121,21 @@ export default function Page(){
                   required
                 />
             </div>
-            <button
+            <Button
               type="submit"
               disabled={isLoading}
-              className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center flex items-center justify-center gap-3 cursor-pointer"
+              className="w-full button primary"
             >
-              { isLoading ? 'Loading' : 'Verify' }
+              { isLoading ? 'Loading' : 'Verifikasi' }
               { isLoading && (<Spinner />) }
-            </button>
+            </Button>
 
-            <div className="text-sm font-medium text-gray-500 mt-4">
-                Didn&apos;t receive the code? <button onClick={sendOtp} className="text-blue-700 hover:underline cursor-pointer">Resend OTP</button>
+            <div className="text-sm font-medium text-gray-500 mt-4 mb-2">
+                Tidak menerima kode? <button onClick={sendOtp} className="text-blue-700 hover:underline cursor-pointer">Kirim ulang OTP</button>
             </div>
+            <div className="text-sm font-medium text-gray-500">
+            Kembali ke <Link href="/" className="text-blue-700 hover:underline">Homepage</Link>
+          </div>
         </form>
       </div>
     </section>

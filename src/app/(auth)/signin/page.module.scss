@@ -1,0 +1,6 @@
+.section {
+  background-image: url('/hero-bg.png'), url('/bg.svg');
+  background-size: contain, cover;
+  background-repeat: no-repeat, repeat;
+  background-position: bottom, top center;
+}
