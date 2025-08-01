@@ -1,0 +1,68 @@
+.section {
+  position: relative;
+  background-color: #fff;
+
+  :global(.section-container) {
+    position: relative;
+    flex: 1;
+    padding: min(6vw, 5rem) min(12vw, 10rem);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+
+    h1 {
+      font-size:  max(2rem, min(2.5vw, 3rem));
+      margin-bottom: 1rem;
+    }
+  }
+
+  :global(.testimony-card) {
+    border: 1px solid var(--border);
+    border-radius: .5rem;
+
+    padding: 1rem;
+  }
+
+  :global(.testimony-header) {
+    display: grid;
+    grid-template-columns: minmax(max-content, 64px) auto;
+    gap: .5rem;
+    margin-bottom: .5rem;
+  }
+
+  :global(.testimony-image) {
+    border-radius: 50%;
+    background-color: #ddd;
+  }
+
+  :global(.testimony-user) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: .125rem;
+  }
+
+  :global(.testimony-content) {
+    margin-bottom: .5rem;
+    font-style: italic;
+  }
+
+  :global(.customer-logo) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px dashed var(--border);
+    border-radius: .5rem;
+
+    background-color: var(--background);
+    padding: 2rem;
+
+    :global(.logo) {
+      font-size: 3rem;
+      color: #888;
+    }
+  }
+}

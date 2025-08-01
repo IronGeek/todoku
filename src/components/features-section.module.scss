@@ -1,0 +1,47 @@
+.section {
+  position: relative;
+  background-color: #f8f8f8;
+
+  :global(.section-container) {
+    position: relative;
+    flex: 1;
+    padding: min(6vw, 5rem) min(12vw, 10rem);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+
+    h1 {
+      font-size:  max(2rem, min(2.5vw, 3rem));
+      margin-bottom: 2rem;
+    }
+
+    :global(.feature-card) {
+      display: flex;
+      align-items: start;
+      gap: 1.25rem;
+
+      color: #666;
+    }
+
+    :global(.feature-icon) {
+      border: 1px dashed #ccc;
+      border-radius: .25rem;
+
+      background-color: var(--border);
+
+      font-size: 2rem;
+      padding: .75rem;
+      flex-shrink: 0;
+    }
+
+    :global(.feature-title) {
+      font-size: 1.25rem;
+      font-weight: bold;
+      margin-bottom: .5rem;
+
+      color: #222;
+    }
+  }
+}

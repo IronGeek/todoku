@@ -1,0 +1,56 @@
+.section {
+  position: relative;
+  background-color: var(--background);
+
+  :global(.section-container) {
+    position: relative;
+    flex: 1;
+    padding: min(6vw, 5rem) min(12vw, 10rem);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+
+    h1 {
+      font-size:  max(2rem, min(2.5vw, 3rem));
+      margin-bottom: 2rem;
+    }
+
+    :global(.benefit-card) {
+      display: flex;
+      color: #666;
+    }
+
+    :global(.benefit-content) {
+      display: flex;
+      flex-direction: column;
+      gap: .5rem;
+    }
+
+    :global(.benefit-icon) {
+      border: 1px dashed #ccc;
+      border-radius: .25rem;
+
+      font-size: 2rem;
+      padding: .75rem;
+      flex-shrink: 0;
+    }
+
+    :global(.benefit-title) {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+
+      font-size: max(1.25rem, min(1.75vw, 1.5rem));
+      font-weight: bold;
+
+      color: #222;
+    }
+
+    :global(.benefit-text) {
+      font-size: max(1.1rem, min(1.5vw, 1.25rem));
+      text-align: center;
+    }
+  }
+}

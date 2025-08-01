@@ -1,0 +1,67 @@
+.form {
+  display: inline-grid;
+  grid-template-columns: auto 1fr min-content;
+  align-items: center;
+
+  :global(.form-input-container) {
+    border: 2px solid transparent;
+    border-radius: .625rem;
+
+    &:focus-within {
+      border: 2px solid var(--accent);
+    }
+  }
+
+  label {
+    margin-right: 1rem;
+  }
+
+  input {
+    border: 1px dashed var(--border);
+    border-right: 0 none;
+    border-radius: .5rem 0 0 .5rem;
+
+    padding: .25rem .5rem;
+    outline: none;
+  }
+
+  button {
+    border: 1px solid var(--border);
+    border-radius: 0 .5rem .5rem 0;
+    padding: .25rem .75rem;
+
+    &:not(:disabled), &:not([disabled]) {
+      cursor: pointer;
+    }
+
+    &:global(.primary) {
+      border: 1px solid var(--primary);
+      background-color: var(--primary);
+      color: var(--primary-foreground);
+
+      &:hover {
+        background-color: var(--primary-hover);
+      }
+    }
+
+    &:global(.secondary) {
+      border: 1px solid var(--secondary);
+      background-color: var(--secondary);
+      color: var(--secondary-foreground);
+
+      &:hover {
+        background-color: var(--secondary-hover);
+      }
+    }
+
+    &:global(.accent) {
+      border: 1px solid var(--accent);
+      background-color: var(--accent);
+      color: var(--accent-foreground);
+
+      &:hover {
+        background-color: var(--accent-hover);
+      }
+    }
+  }
+}

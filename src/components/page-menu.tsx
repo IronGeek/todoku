@@ -2,7 +2,7 @@
 
 import { Link } from '@/components/link';
 import { cx } from '@/ui/utils';
-import { GitHubIcon } from '@/ui/icons';
+import { GithubIcon } from '@/ui/icons';
 
 import type { HTMLAttributes } from 'react';
 
@@ -27,7 +27,7 @@ const PageMenu = ({ className, ...props }: PageMenuProps) => {
           </li>
         : null }
       <li className={styles.menu_item}>
-        <Link title="Repository" target="_blank" href="https://github.com/IronGeek/todoku"><GitHubIcon size="1.5em" /></Link>
+        <Link title="Repository" target="_blank" href="https://github.com/IronGeek/todoku"><GithubIcon size="1.5em" /></Link>
       </li>
       <li className={cx('page-menu-item')}>
       { status === 'authenticated'
