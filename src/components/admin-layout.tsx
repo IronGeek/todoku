@@ -59,6 +59,11 @@ const AdminLayout = ({ className, footer, navbar, sidebar, children, ...props }:
                 icon={<PersonArmsUpIcon />}
                 href="/dashboard/users"
                 text="Users" />
+              <Sidebar.MenuItem
+                active={pathname == '/dashboard/taks'}
+                icon={<TaskIcon />}
+                href="/dashboard/tasks"
+                text="Tasks" />
             </Sidebar.Menu>
           </Sidebar>
         : null }

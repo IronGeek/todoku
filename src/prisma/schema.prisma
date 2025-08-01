@@ -46,3 +46,14 @@ model OTP {
 
   @@map("otp")
 }
+
+model Todo {
+  id           String  @id @default(cuid(2))               @db.VarChar(36)
+  title        String                                      @db.VarChar(64)
+  description  String                                      @db.VarChar(255)
+  due          DateTime                                    @db.Timestamptz(3)
+  list         String                                      @db.VarChar(25)
+  tags         String                                      @db.VarChar(255)
+  stared       Boolean
+  done         Boolean
+}
