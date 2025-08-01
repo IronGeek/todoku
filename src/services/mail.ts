@@ -12,14 +12,14 @@ const sendMail = async (message: SendMailMessage): Promise<boolean> => {
 
   try {
     const transporter = nodemailer.createTransport({
-      // service: process.env.EMAIL_SERVICE,
-      // auth: {
-      //   user: process.env.EMAIL_FROM,
-      //   pass: process.env.EMAIL_PASSWORD,
-      // }
-      host: 'localhost',
-      port: 3025,
-      secure: false
+      service: process.env.EMAIL_SERVICE,
+      auth: {
+        user: process.env.EMAIL_FROM,
+        pass: process.env.EMAIL_PASSWORD,
+      }
+      // host: 'localhost',
+      // port: 3025,
+      // secure: false
     });
 
     const info = await transporter.sendMail({
