@@ -29,7 +29,6 @@ const Page = () => {
     e.preventDefault();
 
     setIsLoading(true);
-    console.log('Registering user:', { email: registerEmail, password: registerPassword, name: registerName });
     const res = await fetch('/api/auth/signup', {
       method: 'POST',
       body: JSON.stringify({

@@ -1,4 +1,4 @@
-import { Layout } from '@/components/layout';
+import { UserLayout } from '@/components/user-layout';
 import { getTodos } from '@/services/todo';
 import { AppStateUpdater } from '@/state/updater';
 
@@ -6,11 +6,11 @@ const RootLayout = async ({ children }) => {
   const todos = await getTodos();
 
   return (
-    <Layout>
+    <UserLayout>
       <AppStateUpdater title="All Tasks" todos={todos}>
         {children}
       </AppStateUpdater>
-    </Layout>
+    </UserLayout>
   );
 };
 

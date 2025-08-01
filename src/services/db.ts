@@ -38,6 +38,7 @@ const createUser = async (email: string, name: string, passwd: string, expiry: n
         email,
         password,
         name,
+        role: 'USER',
         otp: {
           create: record
         },
@@ -88,7 +89,6 @@ const verifyUserOTP = async (email: string, userOTP: string): Promise<boolean> =
 
     if (!otp) { return false }
     const valid = await bcrypt.compare(userOTP, otp.code);
-    console.log(otp.code, userOTP, valid);
     if (!valid) { return false }
 
     await tx.oTP.delete({ where: { id: otp.id } });

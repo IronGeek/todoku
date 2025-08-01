@@ -41,7 +41,7 @@ const Page = () => {
 
       setAlert({ type: "error", message, isShow: true });
     } else {
-      router.push('/home');
+      router.push('/');
     }
     setIsLoading(false);
   };

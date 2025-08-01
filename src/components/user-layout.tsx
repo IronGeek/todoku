@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { usePathname } from 'next/navigation';
+import { useState } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
 
 import { Logo } from '@/components/logo';
 import { Navbar } from '@/components/navbar';
@@ -13,17 +13,18 @@ import { cx } from '@/ui/utils';
 
 import type { HTMLAttributes, PropsWithChildren, ReactNode } from 'react';
 
-import styles from './layout.module.scss';
+import styles from './user-layout.module.scss';
 import { signOut, useSession } from 'next-auth/react';
 
-type LayoutProps = PropsWithChildren<HTMLAttributes<HTMLDivElement>> & {
+type UserLayoutProps = PropsWithChildren<HTMLAttributes<HTMLDivElement>> & {
   readonly footer?: boolean
   readonly sidebar?: boolean
   readonly navbar?: boolean
 };
 
-const Layout = ({ className, footer, navbar, sidebar, children, ...props }: LayoutProps): ReactNode => {
+const UserLayout = ({ className, footer, navbar, sidebar, children, ...props }: UserLayoutProps): ReactNode => {
   const { data: session, status } = useSession();
+  const router = useRouter();
 
   const pathname = usePathname();
   const summary = useAppSelector((state) => state.todos.summary);
@@ -42,7 +43,7 @@ const Layout = ({ className, footer, navbar, sidebar, children, ...props }: Layo
               <Sidebar.Menu>
                 <Sidebar.MenuItem icon={<SettingsIcon />} text="Settings" />
                 { status === 'authenticated'
-                  ? <Sidebar.MenuItem icon={<SignOutIcon />} text="Sign out" onClick={() => { signOut({ callbackUrl: '/' }) }} />
+                  ? <Sidebar.MenuItem icon={<SignOutIcon />} text="Sign out" onClick={() => { signOut({ redirect: false }).then(() => { router.push('/') }) }} />
                   : null }
               </Sidebar.Menu>
             }
@@ -124,5 +125,5 @@ const Layout = ({ className, footer, navbar, sidebar, children, ...props }: Layo
   );
 };
 
-export { Layout };
-export type { LayoutProps };
+export { UserLayout };
+export type { UserLayoutProps };

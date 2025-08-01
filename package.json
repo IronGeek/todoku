@@ -40,6 +40,7 @@
     "@types/nodemailer": "^6.4.17",
     "@types/react": "19.1.9",
     "@types/react-dom": "^19.1.7",
+    "dotenv": "^17.2.1",
     "postcss": "^8.5.6",
     "prisma": "^6.13.0",
     "sass-embedded": "^1.89.2",
@@ -48,6 +49,6 @@
     "typescript": "^5.9.2"
   },
   "prisma": {
-    "schema": "./src/prisma"
+    "seed": "node src/prisma/seed.ts"
   }
 }

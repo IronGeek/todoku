@@ -14,11 +14,18 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  USER
+  ADMIN
+  SYSTEM
+}
+
 model User {
   id         String    @id @default(cuid(2))                @db.VarChar(36)
   name       String                                         @db.VarChar(64)
   email      String    @unique                              @db.VarChar(255)
   password   String                                         @db.VarChar(60)
+  role       Role      @default(USER)
   otp        OTP?
   verifiedAt DateTime? @map("verified_at")                  @db.Timestamptz(3)
   createdAt  DateTime  @map("created_at") @default(now())   @db.Timestamptz(3)

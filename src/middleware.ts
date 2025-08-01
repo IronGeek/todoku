@@ -1,25 +1,55 @@
-import { auth, protectedRoutes } from '@/auth.config'
-import { NextAuthRequest } from 'next-auth';
+import { auth, protectedRoutes, Route } from '@/auth.config'
 import { NextResponse } from 'next/server';
 
-const isRouteMatch = (route: string): boolean => {
-  return protectedRoutes.some((pattern) => (
-    pattern instanceof RegExp) ? pattern.test(route) : route.startsWith(pattern)
+import type { NextAuthRequest, Session } from 'next-auth';
+import { isFuture } from 'date-fns';
+
+const getMatchedRoute = (path: string): Route => {
+  return protectedRoutes.find((route) =>
+    (route.pattern instanceof RegExp) ? route.pattern.test(path) : route.pattern === path
   );
 }
 
+const isLoggedIn = (session?: Session): Session['user'] => {
+  return session?.user && isFuture(session.expires) ? session.user : null;
+}
+
 export default auth((req: NextAuthRequest) => {
-  const isLoggedIn = !!req.auth;
-  const isProtectedRoute = isRouteMatch(req.nextUrl.pathname);
+  const { pathname } = req.nextUrl;
+  const match = getMatchedRoute(pathname);
 
-  if (!isProtectedRoute || isLoggedIn) { return NextResponse.next() }
+  if (!match && pathname !== '/') {
+    // not landing page and path is not protected, continue
+    return NextResponse.next()
+  }
 
-  return NextResponse.redirect(new URL('/signin', req.url));
+  const loggedIn = isLoggedIn(req.auth);
+  if (!loggedIn) {
+    if (pathname === '/') {
+      // we're at landing page, continue
+      return NextResponse.next()
+    }
+
+    // login is required, redirect to signin
+    return NextResponse.redirect(new URL('/signin', req.url));
+  }
+
+  if (pathname === '/' || !match?.roles.includes(loggedIn.role)) {
+    // we're at landing page, or user does not have sufficient role to access path
+    // redirect (user => /home,  admin => /dashboard)
+    if (loggedIn.role === 'ADMIN') {
+      return NextResponse.redirect(new URL('/dashboard', req.url))
+    } else {
+      return NextResponse.redirect(new URL('/home', req.url))
+    }
+  }
+
+  return NextResponse.next()
 });
 
 export const config = {
   // https://nextjs.org/docs/app/building-your-application/routing/middleware#matcher
   matcher: [
-    '/((?!api|signin|signup|_next\/static|_next\/image|.*\.(?:png|svg)$).+)'
+    '/((?!api|signin|signup|_next\/static|_next\/image|.*\.(?:png|svg)$).*)'
   ],
 };

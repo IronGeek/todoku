@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { createUser, findUserByEmail } from '@/services/db';
+import { createUser } from '@/services/db';
 import { sendMail } from '@/services/mail';
 
 const POST = async (req: Request) => {

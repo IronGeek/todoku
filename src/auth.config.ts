@@ -1,5 +1,6 @@
-import NextAuth, { CredentialsSignin } from 'next-auth';
+import NextAuth, { CredentialsSignin, Role } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
+
 
 class CredentialsError extends CredentialsSignin {
   constructor(error?: Error) {
@@ -36,11 +37,43 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
       },
     }),
   ],
+  callbacks: {
+    async jwt({ token, user, account, profile }) {
+      if (user) {
+        token.id = user.id;
+        token.role = user.role;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      if (token.id) {
+        session.user.id = token.id;
+      }
+      if (token.role) {
+        session.user.role = token.role;
+      }
+      return session;
+    }
+  },
   session: { strategy: "jwt" },
   pages: { signIn: "/signin" },
   secret: process.env.NEXTAUTH_SECRET,
 });
 
-export const protectedRoutes: (string | RegExp)[] = [
-  /^\/(?:home|today|upcoming|done|pin|archive|l\/.*?)$/u
-];
+export interface Route {
+  pattern: string | RegExp
+  roles: Role[]
+}
+
+export const protectedRoutes: Route[] = [
+  {
+    // /home, /today, /upcoming, /done, /pin, /archive, and /l/*
+    pattern: /^\/(?:home|today|upcoming|done|pin|archive|l\/.*?)$/u,
+    roles: ['USER', 'ADMIN']
+  },
+  {
+    // all routes under /dashboard
+    pattern: /^\/dashboard/u,
+    roles: ['ADMIN']
+  }
+]

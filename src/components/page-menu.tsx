@@ -9,12 +9,14 @@ import type { HTMLAttributes } from 'react';
 import styles from './page-menu.module.scss';
 import { signOut, signIn, useSession } from 'next-auth/react';
 import { LinkButton } from '@/ui/forms/link-button';
+import { useRouter } from 'next/navigation';
 
 type PageMenuProps = HTMLAttributes<HTMLOListElement> & {
 };
 
 const PageMenu = ({ className, ...props }: PageMenuProps) => {
   const { data: session, status } = useSession();
+  const router = useRouter();
 
   return (
     <ol {...props} className={cx(styles.menu, "page-menu", className)}>
@@ -32,7 +34,7 @@ const PageMenu = ({ className, ...props }: PageMenuProps) => {
       <li className={cx('page-menu-item')}>
       { status === 'authenticated'
         ? <LinkButton>
-            <button className="primary" onClick={() => signOut({ callbackUrl: '/' })}>Sign Out</button>
+            <button className="primary" onClick={() => signOut({ redirect: false }).then(() => { router.push('/') })}>Sign Out</button>
           </LinkButton>
         : null  }
         </li>

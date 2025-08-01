@@ -122,8 +122,6 @@ const getRandomTask = () => {
     task = tasks[0];
     tasks.push(...used.splice(0, used.length));
   }
-
-  console.log(tasks.length, used.length);
   return task;
 }
 
