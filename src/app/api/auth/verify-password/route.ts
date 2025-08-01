@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { verifyUserPassword } from '@/services/db';
+import { verifyUserPassword } from '@/services/user';
 
 const POST = async (req: Request) => {
   const { credentials } = await req.json();

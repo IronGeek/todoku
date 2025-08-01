@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { verifyUserOTP } from '@/services/db';
+import { verifyUserOTP } from '@/services/user';
 
 const  POST = async (req: Request) => {
   try {

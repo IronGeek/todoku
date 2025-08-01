@@ -1,0 +1,21 @@
+.layout {
+  display: grid;
+  grid-template-columns: min-content auto;
+
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+
+  :global(.layout-logo) {
+    font-size: 2.5rem;
+  }
+
+  :global(.layout-content) {
+    overflow: hidden;
+  }
+
+  :global(.layout-main) {
+    height: calc(100% - var(--app-navbar-height));
+    overflow: auto;
+  }
+}

@@ -5,6 +5,11 @@ import SignOutIcon from '@/ui/icons/sign-out.svg';
 import HashIcon from '@/ui/icons/hash.svg';
 import ListIcon from '@/ui/icons/list.svg';
 import PlusIcon from '@/ui/icons/plus.svg';
+import PlusLgIcon from '@/ui/icons/plus-lg.svg';
+import XIcon from '@/ui/icons/x.svg';
+import XLgIcon from '@/ui/icons/x-lg.svg';
+import PencilIcon from '@/ui/icons/pencil.svg';
+import TrashIcon from '@/ui/icons/trash.svg';
 import ArchivedIcon from '@/ui/icons/archived.svg';
 import UpcomingIcon from '@/ui/icons/upcoming.svg';
 import TodayIcon from '@/ui/icons/today.svg';
@@ -58,5 +63,6 @@ export {
   ThumbsUpIcon, CapsulePillIcon, ShieldCheckIcon, BinocularsIcon, CrossHairIcon, BoltIcon,
   ActivityIcon, LightbulbIcon, OrderAscIcon, HeartPulseIcon, PersonHeartsIcon, PersonArmsUpIcon,
   DatabaseIcon, CurrencyIcon, BarChartIcon, TicketIcon, IncognitoIcon, PatchCheckIcon,
-  StarIcon, StarHalfIcon, FacebookIcon, TwitterXIcon, InstagramIcon, YoutubeIcon, GitlabIcon
+  StarIcon, StarHalfIcon, FacebookIcon, TwitterXIcon, InstagramIcon, YoutubeIcon, GitlabIcon,
+  PlusLgIcon, XIcon, XLgIcon, PencilIcon, TrashIcon
 };

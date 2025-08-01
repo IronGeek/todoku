@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { createUser } from '@/services/db';
+import { createUser } from '@/services/user';
 import { sendMail } from '@/services/mail';
 
 const POST = async (req: Request) => {
@@ -15,7 +15,7 @@ const POST = async (req: Request) => {
 
     const { email, password, name } = schema.parse(data);
     const timeout = parseInt(process.env.OTP_TIMEOUT, 10);
-    const [user, otp] = await createUser(email, name, password, timeout);
+    const [user, otp] = await createUser({ email, name, password, role: 'USER' }, false, timeout);
 
     if (user && otp) {
       await sendMail({

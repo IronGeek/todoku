@@ -1,8 +1,11 @@
+import { AdminLayout } from '@/components/admin-layout';
+
 const RootLayout = async ({ children }) => {
+
   return (
-    // <Layout>
-      <>{children}</>
-    // </Layout>
+    <AdminLayout>
+      {children}
+    </AdminLayout>
   );
 };
 

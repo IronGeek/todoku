@@ -24,6 +24,8 @@
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
   --color-accent-hover: var(--accent-hover);
+  --color-destructive: var(--destructive);
+
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
 
@@ -84,8 +86,9 @@ body { min-height:100% }
   --accent-foreground: oklch(0.985 0 0);
   --accent-hover: oklch(0.652 0.19 253 / 0.875);
 
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
 
   --border: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);
