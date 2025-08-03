@@ -11,7 +11,7 @@ interface UserState {
 }
 
 const addNewUser = async (
-  _state: CreateUserState,
+  _state: UserState,
   formData: FormData
 ): Promise<UserState> => {
   try {
