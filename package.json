@@ -6,7 +6,7 @@
   "type": "module",
   "keywords": [],
   "scripts": {
-    "build": "next build",
+    "build": "prisma generate --no-engine && next build",
     "dev": "next dev",
     "start": "next start",
     "lint": "eslint ."
