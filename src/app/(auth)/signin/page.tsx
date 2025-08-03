@@ -45,7 +45,7 @@ const Page = (): JSX.Element => {
 
       setAlert({ message, isShow: true, type: 'error' });
     } else {
-      router.push('/');
+      location.href = '/';
     }
 
     setIsLoading(false);
