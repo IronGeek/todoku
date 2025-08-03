@@ -18,7 +18,7 @@ import { Input } from '@/ui/input.tsx';
 import { Table } from '@/ui/table.tsx';
 import { cx } from '@/ui/utils.ts';
 
-import type { Column, ColumnDef, ColumnFiltersState, InitialTableState, SortingState, VisibilityState } from '@tanstack/react-table';
+import type { CellContext, Column, ColumnDef, ColumnFiltersState, InitialTableState, SortingState, VisibilityState } from '@tanstack/react-table';
 import type { Session } from 'next-auth';
 import type { JSX, ReactNode } from 'react';
 
@@ -152,7 +152,7 @@ const DataTable = <TData, TValue>({
                 >
                   {row.getVisibleCells().map((cell) => (
                     <Table.Cell key={cell.id} align={cell.column.columnDef.meta?.align} style={{ width: cell.column.columnDef.meta?.width }}>
-                      {flexRender(cell.column.columnDef.cell, { ...cell.getContext(), session })}
+                      {flexRender(cell.column.columnDef.cell, { ...cell.getContext(), session } as CellContext<TData, TValue>)}
                     </Table.Cell>
                   ))}
                 </Table.Row>
