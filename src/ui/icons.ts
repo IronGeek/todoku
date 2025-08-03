@@ -1,5 +1,4 @@
 /* eslint-disable @import/max-dependencies */
-
 import ActivityIcon from '@/ui/icons/activity.svg';
 import AIIcon from '@/ui/icons/ai.svg';
 import ArchivedIcon from '@/ui/icons/archived.svg';
@@ -9,7 +8,10 @@ import BinocularsIcon from '@/ui/icons/binoculars.svg';
 import BoltIcon from '@/ui/icons/bolt.svg';
 import CalendarIcon from '@/ui/icons/calendar.svg';
 import CapsulePillIcon from '@/ui/icons/capsule-pill.svg';
+import CheckLgIcon from '@/ui/icons/check-lg.svg';
 import CheckIcon from '@/ui/icons/check.svg';
+import ChevronDoubleLeftIcon from '@/ui/icons/chevron-double-left.svg';
+import ChevronDoubleRightIcon from '@/ui/icons/chevron-double-right.svg';
 import ChevronDownIcon from '@/ui/icons/chevron-down.svg';
 import ChevronLeftIcon from '@/ui/icons/chevron-left.svg';
 import ChevronRightIcon from '@/ui/icons/chevron-right.svg';
@@ -30,6 +32,7 @@ import IncognitoIcon from '@/ui/icons/incognito.svg';
 import InstagramIcon from '@/ui/icons/instagram.svg';
 import LightbulbIcon from '@/ui/icons/lightbulb.svg';
 import ListIcon from '@/ui/icons/list.svg';
+import LockIcon from '@/ui/icons/lock.svg';
 import OrderAscIcon from '@/ui/icons/order-asc.svg';
 import PatchCheckIcon from '@/ui/icons/patch-check.svg';
 import PencilIcon from '@/ui/icons/pencil.svg';
@@ -38,14 +41,20 @@ import PersonHeartsIcon from '@/ui/icons/person-hearts.svg';
 import PinIcon from '@/ui/icons/pin.svg';
 import PinnedIcon from '@/ui/icons/pinned.svg';
 import PlusLgIcon from '@/ui/icons/plus-lg.svg';
+import PlusSquareIcon from '@/ui/icons/plus-square.svg';
 import PlusIcon from '@/ui/icons/plus.svg';
+import RequiredIcon from '@/ui/icons/required.svg';
+import ReturnIcon from '@/ui/icons/return.svg';
 import SettingsIcon from '@/ui/icons/settings.svg';
 import ShieldCheckIcon from '@/ui/icons/shield-check.svg';
 import SignOutIcon from '@/ui/icons/sign-out.svg';
+import SortAscIcon from '@/ui/icons/sort-asc.svg';
+import SortDescIcon from '@/ui/icons/sort-desc.svg';
 import StarHalfIcon from '@/ui/icons/star-half.svg';
 import StarIcon from '@/ui/icons/star.svg';
 import TagIcon from '@/ui/icons/tag.svg';
 import TaskIcon from '@/ui/icons/task.svg';
+import ThreeDotsIcon from '@/ui/icons/three-dots.svg';
 import ThumbsUpIcon from '@/ui/icons/thumbs-up.svg';
 import TicketIcon from '@/ui/icons/ticket.svg';
 import TodayIcon from '@/ui/icons/today.svg';
@@ -66,5 +75,6 @@ export {
   ActivityIcon, LightbulbIcon, OrderAscIcon, HeartPulseIcon, PersonHeartsIcon, PersonArmsUpIcon,
   DatabaseIcon, CurrencyIcon, BarChartIcon, TicketIcon, IncognitoIcon, PatchCheckIcon,
   StarIcon, StarHalfIcon, FacebookIcon, TwitterXIcon, InstagramIcon, YoutubeIcon, GitlabIcon,
-  PlusLgIcon, XIcon, XLgIcon, PencilIcon, TrashIcon
+  PlusLgIcon, XIcon, XLgIcon, PencilIcon, TrashIcon, LockIcon, RequiredIcon, ReturnIcon, CheckLgIcon,
+  ThreeDotsIcon, ChevronDoubleLeftIcon, ChevronDoubleRightIcon, SortAscIcon, SortDescIcon, PlusSquareIcon
 };

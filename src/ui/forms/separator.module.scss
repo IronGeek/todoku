@@ -1,0 +1,27 @@
+.separator {
+  position: relative;
+
+  height: 1rem;
+  margin-bottom: 1rem;
+
+  &:before {
+    content: '';
+
+    position: absolute;
+    left: 0;
+    top: 50%;
+
+    border-top: 1px dashed var(--border);
+    width: 100%;
+  }
+
+  &:after {
+    content: attr(data-text, '');
+
+    position: absolute;
+    left: 50%;
+    top: calc(50% - .125em);
+
+    transform: translate(-50%, -50%);
+  }
+}

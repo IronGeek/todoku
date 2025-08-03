@@ -1,5 +1,5 @@
+import { Button } from '@/ui/button.tsx';
 import { useCarousel } from '@/ui/carousel/provider.ts';
-import { Button } from '@/ui/forms/button.tsx';
 import { ChevronRightIcon } from '@/ui/icons.ts';
 import { cx } from '@/ui/utils.ts';
 

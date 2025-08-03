@@ -1,0 +1,12 @@
+.button {
+  cursor: pointer;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .25rem;
+  white-space: nowrap;
+
+  border-radius: .25rem;
+  outline: none;
+}

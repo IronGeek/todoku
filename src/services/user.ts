@@ -1,3 +1,5 @@
+'use server';
+
 import { compare, hash } from 'bcrypt';
 
 import { prisma } from '@/services/db.ts';

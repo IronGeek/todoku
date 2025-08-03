@@ -26,10 +26,8 @@ const Intro = (): JSX.Element => (
 
       <div className="intro-actions flex-col sm:flex-row items-center text-center">
         <LinkButton as={Link} className="accent" href="/signin">
-          Mulai
+          Login
         </LinkButton>
-
-        <span className="text-muted">atau</span>
 
         <LinkButton as={Link} className="primary" href="/signup">
           Daftar

@@ -7,7 +7,10 @@ import { useState } from 'react';
 import { Alert } from '@/components/alert.tsx';
 import { Logo } from '@/components/logo.tsx';
 import { Spinner } from '@/components/spinner.tsx';
-import { Button } from '@/ui/forms/button.tsx';
+import { Button } from '@/ui/button.tsx';
+import { LinkButton } from '@/ui/forms/link-button.tsx';
+import { Form } from '@/ui/forms.tsx';
+import { ReturnIcon } from '@/ui/icons.ts';
 import { cx } from '@/ui/utils.ts';
 
 import styles from './page.module.scss';
@@ -64,18 +67,24 @@ const Page = (): JSX.Element => {
   };
 
   return (
-    <section className={cx(styles.section, 'h-screen flex items-center justify-center')}>
-      <div className="w-full max-w-md p-4 bg-white border border-gray-200 rounded-lg shadow-sm sm:p-6 md:p-8">
-        <form className="space-y-6" onSubmit={handleRegister}>
-          <h5 className="flex gap-1 text-2xl font-medium text-gray-900">Daftar ke <Logo className="mb-[-.25rem]" /></h5>
+    <section className={styles.section}>
+      <div className="section-container max-w-lg shadow-sm p-4 sm:p-6 md:p-8">
+        <Form
+          actions={
+            <LinkButton as={Link} href="/"><ReturnIcon /></LinkButton>
+          }
+          loading={isLoading}
+          title={
+            <>Daftar ke <Logo className="mb-[-.25rem]" /></>
+          }
+          onSubmit={handleRegister}
+        >
           {alert.isShow ? <Alert message={alert.message} type={alert.type} /> : null}
 
-          <div>
-            <label className="block mb-2 text-sm font-medium text-gray-900" htmlFor="name">Nama</label>
-
-            <input
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          <Form.Group>
+            <Form.InputText
               id="name"
+              label="Nama"
               maxLength={64}
               name="name"
               placeholder="John Doe"
@@ -83,14 +92,12 @@ const Page = (): JSX.Element => {
               type="text"
               value={registerName}
               onChange={(e) => setRegisterName(e.target.value)} />
-          </div>
+          </Form.Group>
 
-          <div>
-            <label className="block mb-2 text-sm font-medium text-gray-900" htmlFor="email">Email</label>
-
-            <input
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          <Form.Group>
+            <Form.InputText
               id="email"
+              label="Email"
               maxLength={255}
               name="email"
               placeholder="john.doe@example.com"
@@ -98,14 +105,12 @@ const Page = (): JSX.Element => {
               type="email"
               value={registerEmail}
               onChange={(e) => setRegisterEmail(e.target.value)} />
-          </div>
+          </Form.Group>
 
-          <div>
-            <label className="block mb-2 text-sm font-medium text-gray-900" htmlFor="password">Password</label>
-
-            <input
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          <Form.Group>
+            <Form.InputText
               id="password"
+              label="Password"
               maxLength={60}
               minLength={6}
               name="password"
@@ -114,24 +119,24 @@ const Page = (): JSX.Element => {
               type="password"
               value={registerPassword}
               onChange={(e) => setRegisterPassword(e.target.value)} />
-          </div>
+          </Form.Group>
 
-          <Button
-            className="w-full primary"
-            type="submit"
-          >
-            {isLoading ? 'Loading' : 'Daftarkan akunmu'}
-            {isLoading ? <Spinner /> : null}
-          </Button>
+          <Form.Separator />
 
-          <div className="text-sm font-medium text-gray-500 mb-2">
+          <Form.Group>
+            <Button
+              className="w-full"
+              type="submit"
+            >
+              {isLoading ? 'Loading' : 'Daftarkan akunmu'}
+              {isLoading ? <Spinner /> : null}
+            </Button>
+          </Form.Group>
+
+          <Form.Group>
             Sudah punya akun? <Link className="text-blue-700 hover:underline" href="/signin">Masuk ke akunmu</Link>
-          </div>
-
-          <div className="text-sm font-medium text-gray-500">
-            Kembali ke <Link className="text-blue-700 hover:underline" href="/">Homepage</Link>
-          </div>
-        </form>
+          </Form.Group>
+        </Form>
       </div>
     </section>
   );

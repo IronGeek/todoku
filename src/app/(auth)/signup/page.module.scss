@@ -1,6 +1,19 @@
 .section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   background-image: url('/hero-bg.png'), url('/bg.svg');
   background-size: contain, cover;
   background-repeat: no-repeat, repeat;
   background-position: bottom, top center;
+
+  height: 100vh;
+
+  :global(.section-container) {
+    background-color: #ffffff;
+    border-radius: .5rem;
+
+    width: 100%;
+  }
 }

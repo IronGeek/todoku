@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 
 import { Alert } from '@/components/alert.tsx';
 import { Spinner } from '@/components/spinner.tsx';
-import { Button } from '@/ui/forms/button.tsx';
+import { Button } from '@/ui/button.tsx';
 import { cx } from '@/ui/utils.ts';
 
 import styles from './page.module.scss';
