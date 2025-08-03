@@ -8,8 +8,7 @@
   "scripts": {
     "build": "prisma generate --no-engine && next build",
     "dev": "next dev",
-    "start": "next start",
-    "lint": "eslint ."
+    "start": "next start"
   },
   "dependencies": {
     "@prisma/client": "6.13.0",
@@ -38,7 +37,6 @@
     "zod": "^4.0.14"
   },
   "devDependencies": {
-    "@kikari/eslint-plugin": "0.1.0-rc.4",
     "@svgr/webpack": "^8.1.0",
     "@tailwindcss/postcss": "^4.1.11",
     "@types/bcrypt": "^6.0.0",
