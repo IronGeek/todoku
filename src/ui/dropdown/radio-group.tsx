@@ -1,16 +1,15 @@
-import { RadioGroup } from '@radix-ui/react-dropdown-menu'
+import { RadioGroup } from '@radix-ui/react-dropdown-menu';
 
-import type { ComponentProps } from 'react'
+import type { ComponentProps, JSX } from 'react';
 
 const DropdownRadioGroup = ({
   ...props
-}: ComponentProps<typeof RadioGroup>) => {
-  return (
-    <RadioGroup
-      data-slot="dropdown-menu-radio-group"
-      {...props}
-    />
-  )
-}
+}: ComponentProps<typeof RadioGroup>): JSX.Element => (
+  <RadioGroup
+    data-slot="dropdown-menu-radio-group"
+    {...props} />
+);
 
-export { DropdownRadioGroup }
+DropdownRadioGroup.displayName = 'DropdownRadioGroup';
+
+export { DropdownRadioGroup };

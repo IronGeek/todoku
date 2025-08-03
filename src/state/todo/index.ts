@@ -1,31 +1,28 @@
-import { createSlice } from '@reduxjs/toolkit'
-import { SetCompletedAction, SetPinnedAction, SetTodosAction, SetSummaryAction, SetTitleAction } from './types';
+import { createSlice } from '@reduxjs/toolkit';
 
-export const todosSlice = createSlice({
+import type { SetCompletedAction, SetPinnedAction, SetSummaryAction,  SetTitleAction, SetTodosAction, Todos } from './types';
+
+const todosSlice = createSlice({
   name: 'todos',
+
   initialState: {
-    title: '',
-    items: null,
-    summary: null
-  },
+    items  : null,
+    summary: null,
+    title  : ''
+  } as Todos,
   reducers: {
     setTodos: (state, action: SetTodosAction) => {
       state.items = action.payload.items;
     },
+
     resetTodos: (state) => {
       state.title = '';
       state.items = null;
     },
-    setTitle: (state, action: SetTitleAction) => {
-      state.title = action.payload.title;
-    },
-    setSummary: (state, action: SetSummaryAction) => {
-      state.summary = { ...action.payload.summary };
-    },
     setCompleted: (state, action: SetCompletedAction) => {
       state.items = state.items.map((item) => {
         if (item.id === action.payload.id) {
-          return { ...item, done: action.payload.completed }
+          return { ...item, done: action.payload.completed };
         }
 
         return item;
@@ -34,19 +31,25 @@ export const todosSlice = createSlice({
     setPinned: (state, action: SetPinnedAction) => {
       state.items = state.items.map((item) => {
         if (item.id === action.payload.id) {
-          return { ...item, stared: !item.stared }
+          return { ...item, stared: !item.stared };
         }
 
         return item;
       });
     },
-  },
-})
+    setSummary: (state, action: SetSummaryAction) => {
+      state.summary = { ...action.payload.summary };
+    },
+    setTitle: (state, action: SetTitleAction) => {
+      state.title = action.payload.title;
+    }
+  }
+});
 
 const todosReducer = todosSlice.reducer;
 const { setTodos, setTitle, setSummary, resetTodos, setCompleted, setPinned } = todosSlice.actions;
 
 export {
-  todosReducer,
+  todosReducer, todosSlice,
   setTodos, setTitle, setSummary, resetTodos, setCompleted, setPinned
-}
+};

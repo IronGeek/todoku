@@ -1,20 +1,20 @@
-import { cx } from "@/ui/utils"
-import type { ComponentProps } from "react";
+import { cx } from '@/ui/utils.ts';
 
-type TableFooterProps = ComponentProps<"tfoot">;
+import type { ComponentProps, JSX } from 'react';
 
-const TableFooter = ({ className, ...props }: TableFooterProps) => {
-  return (
-    <tfoot
-      data-slot="table-footer"
-      className={cx(
-        "bg-muted/50 border-t font-medium [&>tr]:last:border-b-0",
-        className
-      )}
-      {...props}
-    />
-  )
-}
+type TableFooterProps = ComponentProps<'tfoot'>;
 
-export { TableFooter }
-export type { TableFooterProps }
+const TableFooter = ({ className, ...props }: TableFooterProps): JSX.Element => (
+  <tfoot
+    className={cx(
+      'bg-muted/50 border-t font-medium [&>tr]:last:border-b-0',
+      className
+    )}
+    data-slot="table-footer"
+    {...props} />
+);
+
+TableFooter.displayName = 'TableFooter';
+
+export { TableFooter };
+export type { TableFooterProps };

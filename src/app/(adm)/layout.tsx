@@ -1,12 +1,13 @@
-import { AdminLayout } from '@/components/admin-layout';
+import { AdminLayout } from '@/components/admin-layout.tsx';
 
-const RootLayout = async ({ children }) => {
+import type { JSX, PropsWithChildren } from 'react';
 
-  return (
-    <AdminLayout>
-      {children}
-    </AdminLayout>
-  );
-};
+const RootLayout = async ({ children }: PropsWithChildren): Promise<JSX.Element> => (
+  <AdminLayout>
+    {children}
+  </AdminLayout>
+);
+
+RootLayout.displayName = 'RootLayout';
 
 export default RootLayout;

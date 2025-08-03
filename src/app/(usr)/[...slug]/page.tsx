@@ -1,46 +1,53 @@
 'use client';
 
-import { useSession } from 'next-auth/react';
-
-import { Main } from '@/components/main';
-import { TodoList } from '@/ui/todo/list';
-import { getTodosFilter, getTodosTitle, groupTodos, resolveSlug } from '@/services/todo';
-import { Todo } from '@/state/todo/types';
-import { useAppDispatch, useAppSelector } from '@/state/hook';
-import { useEffect, useMemo } from 'react';
 import { useParams } from 'next/navigation';
-import { setTitle } from '@/state/todo';
+import { useSession } from 'next-auth/react';
+import { useEffect, useMemo } from 'react';
 
-const Page = () => {
-  const { data: session, status } = useSession();
+import { Main } from '@/components/main.tsx';
+import { getTodosFilter, getTodosTitle, groupTodos, resolveSlug } from '@/services/todo.ts';
+import { useAppDispatch, useAppSelector } from '@/state/hook.ts';
+import { setTitle } from '@/state/todo/index.ts';
+import { TodoList } from '@/ui/todo/list.tsx';
+
+import type { JSX } from 'react';
+
+import type { Todo } from '@/state/todo/types';
+
+const Page = (): JSX.Element => {
+  const { status } = useSession();
 
   const { slug } = useParams();
   const listOrCategory = resolveSlug(slug);
   const dispatch = useAppDispatch();
-  const items: Todo[] = useAppSelector((state)=> state.todos.items);
+  const items: Todo[] = useAppSelector((state) => state.todos.items);
 
   const grouped = useMemo(() => {
-    const filtered = items?.filter(getTodosFilter(listOrCategory))
+    const filtered = items?.filter(getTodosFilter(listOrCategory));
+
     return groupTodos(filtered ?? []);
-  }, [items]);
+  }, [items, listOrCategory]);
 
   useEffect(() => {
-    dispatch(setTitle({ title: getTodosTitle(listOrCategory) }))
-  }, [slug]);
+    dispatch(setTitle({ title: getTodosTitle(listOrCategory) }));
+  }, [slug, listOrCategory, dispatch]);
 
   if (status === 'loading' || status !== 'authenticated') { return null }
 
   return (
     <Main className="gap-8">
-      { grouped.today.length > 0 ? <TodoList title="Today" items={grouped.today} /> : null }
+      { grouped.today.length > 0 ? <TodoList items={grouped.today} title="Today" /> : null }
+
       <div className="grid gap-8 xl:grid-cols-2">
-        { grouped.tomorrow.length > 0 ? <TodoList className="self-start" title="Tomorrow" items={grouped.tomorrow} /> : null }
-        { grouped['this-week'].length > 0 ? <TodoList className="self-start" title="This Week" items={grouped['this-week']} /> : null }
-        { grouped.past.length > 0 ? <TodoList className="self-start" title="In the Past" items={grouped.past} /> : null }
-        { grouped.later.length > 0 ? <TodoList className="self-start" title="Later" items={grouped.later} /> : null }
+        { grouped.tomorrow.length > 0 ? <TodoList className="self-start" items={grouped.tomorrow} title="Tomorrow" /> : null }
+        { grouped['this-week'].length > 0 ? <TodoList className="self-start" items={grouped['this-week']} title="This Week" /> : null }
+        { grouped.past.length > 0 ? <TodoList className="self-start" items={grouped.past} title="In the Past" /> : null }
+        { grouped.later.length > 0 ? <TodoList className="self-start" items={grouped.later} title="Later" /> : null }
       </div>
     </Main>
   );
-}
+};
+
+Page.displayName = 'Page';
 
 export default Page;

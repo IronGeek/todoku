@@ -1,26 +1,28 @@
-import { ComponentProps } from 'react'
-
-import { cx } from '@/ui/utils';
+import { cx } from '@/ui/utils.ts';
 
 import styles from './checkbox.module.scss';
 
+import type { ComponentProps, JSX } from 'react';
+
 type CheckBoxProps = Omit<ComponentProps<'input'>, 'type'> & {
-}
+};
 
-const CheckBox = ({ className, children, ...props }: CheckBoxProps) => {
-  return (
-    children
-      ? <label
-          className={cx(styles.label, "form-checkbox", className)}
-        >
-          <input {...props} type="checkbox" />
-          {children}
-        </label>
-      : <input {...props}
-          type="checkbox"
-          className={cx(styles.input, "form-checkbox", className)} />
-  )
-}
+const CheckBox = ({ className, children, ...props }: CheckBoxProps): JSX.Element => (
+  children
+    ? (
+      <label
+        className={cx(styles.label, 'form-checkbox', className)}
+      >
+        <input {...props} type="checkbox" />
+        {children}
+      </label>)
+    : (<input
+      {...props}
+      className={cx(styles.input, 'form-checkbox', className)}
+      type="checkbox" />)
+);
 
-export { CheckBox }
-export type { CheckBoxProps }
+CheckBox.displayName = 'CheckBox';
+
+export { CheckBox };
+export type { CheckBoxProps };

@@ -1,25 +1,25 @@
 import { z } from 'zod';
 
-import { verifyUserOTP } from '@/services/user';
+import { verifyUserOTP } from '@/services/user.ts';
 
-const  POST = async (req: Request) => {
+const POST = async (req: Request): Promise<Response> => {
   try {
     const data = await req.json();
 
     const schema = z.object({
       email: z.email(),
-      otp: z.string(),
+      otp  : z.string()
     });
 
     const { email, otp } = schema.parse(data);
 
-    const verified =await verifyUserOTP(email, otp);
+    const verified = await verifyUserOTP(email, otp);
     if (!verified) { return Response.json({ error: 'Invalid or expired OTP' }, { status: 400 }) }
 
     return Response.json({ message: 'OTP verified' }, { status: 200 });
   } catch (err) {
     return Response.json({ error: err.message }, { status: 500 });
   }
-}
+};
 
 export { POST };

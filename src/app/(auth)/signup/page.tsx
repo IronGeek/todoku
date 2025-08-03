@@ -1,50 +1,52 @@
 'use client';
 
 import Link from 'next/link';
-import { FormEvent, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
-import { Spinner } from "@/components/spinner";
-import { Alert } from "@/components/alert";
-import { Logo } from '@/components/logo';
-import { Button } from '@/ui/forms/button';
+import { Alert } from '@/components/alert.tsx';
+import { Logo } from '@/components/logo.tsx';
+import { Spinner } from '@/components/spinner.tsx';
+import { Button } from '@/ui/forms/button.tsx';
+import { cx } from '@/ui/utils.ts';
 
 import styles from './page.module.scss';
-import { cx } from '@/ui/utils';
 
-const Page = () => {
+import type { FormEvent, JSX } from 'react';
+
+const Page = (): JSX.Element => {
   const [registerEmail, setRegisterEmail] = useState('');
   const [registerPassword, setRegisterPassword] = useState('');
   const [registerName, setRegisterName] = useState('');
   const [alert, setAlert] = useState({
-    type: '',
+    isShow : false,
     message: '',
-    isShow: false
+    type   : ''
   });
   const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
 
-  const handleRegister = async (e: FormEvent<HTMLFormElement>) => {
+  const handleRegister = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
 
     setIsLoading(true);
     const res = await fetch('/api/auth/signup', {
-      method: 'POST',
       body: JSON.stringify({
-        email: registerEmail,
-        password: registerPassword,
-        name: registerName,
+        email   : registerEmail,
+        name    : registerName,
+        password: registerPassword
       }),
       headers: { 'Content-Type': 'application/json' },
+      method : 'POST'
     });
 
     const data = await res.json();
     if (res.ok) {
       setAlert({
-        type: 'success',
+        isShow : true,
         message: 'Register success, please check your email to verify your account',
-        isShow: true
+        type   : 'success'
       });
       setIsLoading(false);
       localStorage.setItem('pendingVerifyEmail', registerEmail);
@@ -53,82 +55,88 @@ const Page = () => {
       }, 1000);
     } else {
       setAlert({
-        type: 'error',
+        isShow : true,
         message: data.error || 'Register failed',
-        isShow: true
+        type   : 'error'
       });
       setIsLoading(false);
     }
   };
 
   return (
-    <section className={cx(styles.section, "h-screen flex items-center justify-center")}>
+    <section className={cx(styles.section, 'h-screen flex items-center justify-center')}>
       <div className="w-full max-w-md p-4 bg-white border border-gray-200 rounded-lg shadow-sm sm:p-6 md:p-8">
         <form className="space-y-6" onSubmit={handleRegister}>
           <h5 className="flex gap-1 text-2xl font-medium text-gray-900">Daftar ke <Logo className="mb-[-.25rem]" /></h5>
-          {alert.isShow && (
-            <Alert type={alert.type} message={alert.message} />
-          )}
+          {alert.isShow ? <Alert message={alert.message} type={alert.type} /> : null}
+
           <div>
-            <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900">Nama</label>
+            <label className="block mb-2 text-sm font-medium text-gray-900" htmlFor="name">Nama</label>
+
             <input
-              type="text"
-              name="name"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
               id="name"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-              placeholder="John Doe"
-              value={registerName}
               maxLength={64}
-              onChange={(e) => setRegisterName(e.target.value)}
-              required
-            />
+              name="name"
+              placeholder="John Doe"
+              required={true}
+              type="text"
+              value={registerName}
+              onChange={(e) => setRegisterName(e.target.value)} />
           </div>
+
           <div>
-            <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900">Email</label>
+            <label className="block mb-2 text-sm font-medium text-gray-900" htmlFor="email">Email</label>
+
             <input
-              type="email"
-              name="email"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
               id="email"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-              placeholder="john.doe@example.com"
-              value={registerEmail}
               maxLength={255}
-              onChange={(e) => setRegisterEmail(e.target.value)}
-              required
-            />
+              name="email"
+              placeholder="john.doe@example.com"
+              required={true}
+              type="email"
+              value={registerEmail}
+              onChange={(e) => setRegisterEmail(e.target.value)} />
           </div>
+
           <div>
-            <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900">Password</label>
+            <label className="block mb-2 text-sm font-medium text-gray-900" htmlFor="password">Password</label>
+
             <input
-              type="password"
-              name="password"
-              id="password"
-              placeholder="••••••••"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-              value={registerPassword}
-              minLength={6}
+              id="password"
               maxLength={60}
-              onChange={(e) => setRegisterPassword(e.target.value)}
-              required
-            />
+              minLength={6}
+              name="password"
+              placeholder="••••••••"
+              required={true}
+              type="password"
+              value={registerPassword}
+              onChange={(e) => setRegisterPassword(e.target.value)} />
           </div>
+
           <Button
-            type="submit"
             className="w-full primary"
+            type="submit"
           >
             {isLoading ? 'Loading' : 'Daftarkan akunmu'}
-            {isLoading && (<Spinner />)}
+            {isLoading ? <Spinner /> : null}
           </Button>
+
           <div className="text-sm font-medium text-gray-500 mb-2">
-            Sudah punya akun? <Link href="/signin" className="text-blue-700 hover:underline">Masuk ke akunmu</Link>
+            Sudah punya akun? <Link className="text-blue-700 hover:underline" href="/signin">Masuk ke akunmu</Link>
           </div>
+
           <div className="text-sm font-medium text-gray-500">
-            Kembali ke <Link href="/" className="text-blue-700 hover:underline">Homepage</Link>
+            Kembali ke <Link className="text-blue-700 hover:underline" href="/">Homepage</Link>
           </div>
         </form>
       </div>
     </section>
-  )
+  );
 };
+
+Page.displayName = 'Page';
 
 export default Page;

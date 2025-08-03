@@ -1,18 +1,18 @@
-import type { ComponentProps } from 'react';
-
-import { cx } from '@/ui/utils';
+import { cx } from '@/ui/utils.ts';
 
 import styles from './tags.module.scss';
 
-type SidebarTagsProps = ComponentProps<'div'>
+import type { ComponentProps, JSX } from 'react';
 
-const SidebarTags = ({ className, children, ...props }: SidebarTagsProps) => {
-  return (
-    <div {...props} className={cx(styles.tags, "sidebar-tags", className)}>
-      {children}
-    </div>
-  )
-}
+type SidebarTagsProps = ComponentProps<'div'>;
 
-export { SidebarTags }
-export type { SidebarTagsProps }
+const SidebarTags = ({ className, children, ...props }: SidebarTagsProps): JSX.Element => (
+  <div {...props} className={cx(styles.tags, 'sidebar-tags', className)}>
+    {children}
+  </div>
+);
+
+SidebarTags.displayName = 'SidebarTags';
+
+export { SidebarTags };
+export type { SidebarTagsProps };

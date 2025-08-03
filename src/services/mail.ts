@@ -1,34 +1,38 @@
-import nodemailer from 'nodemailer';
+import { createTransport } from 'nodemailer';
 
 interface SendMailMessage {
-  readonly to: string
+  readonly html?: string
   readonly subject: string
   readonly text: string
-  readonly html?: string
+  readonly to: string
 }
 
 const sendMail = async (message: SendMailMessage): Promise<boolean> => {
   const { to, subject, text, html } = message;
 
   try {
-    const transporter = nodemailer.createTransport({
-      service: process.env.EMAIL_SERVICE,
+    const transporter = createTransport({
       auth: {
-        user: process.env.EMAIL_FROM,
         pass: process.env.EMAIL_PASSWORD,
-      }
-      // host: 'localhost',
-      // port: 3025,
-      // secure: false
+        user: process.env.EMAIL_FROM
+      },
+      service: process.env.EMAIL_SERVICE
+      /*
+       * Host: 'localhost',
+       * port: 3025,
+       * secure: false
+       */
     });
 
     const info = await transporter.sendMail({
-      from: process.env.EMAIL_FROM,
-      to,
+      html,
       subject,
       text,
-      html
+      to,
+      from: process.env.EMAIL_FROM
     });
+
+    console.debug(info);
 
     return true;
   } catch (err) {
@@ -36,7 +40,7 @@ const sendMail = async (message: SendMailMessage): Promise<boolean> => {
 
     return false;
   }
-}
+};
 
 export { sendMail };
 export type { SendMailMessage };

@@ -1,31 +1,32 @@
 import { z } from 'zod';
 
-import { createUser, getUsers, removeUserById, updateUser } from '@/services/user';
-import { NextRequest } from 'next/server';
+import { createUser, getUsers, removeUserById, updateUser } from '@/services/user.ts';
 
-const GET = async (req: NextRequest, ) => {
+import type { NextRequest } from 'next/server';
+
+const GET = async (req: NextRequest): Promise<Response> => {
   try {
     const { searchParams } = req.nextUrl;
     const pageIndex = searchParams.get('pageIndex') ?? '0';
     const pageSize = searchParams.get('pageSize') ?? '10';
 
-    const users = await getUsers(parseInt(pageIndex), parseInt(pageSize));
+    const users = await getUsers(parseInt(pageIndex, 10), parseInt(pageSize, 10));
 
     return Response.json(users, { status: 200 });
   } catch (error) {
     return Response.json({ error: error.stack }, { status: 500 });
   }
-}
+};
 
-const POST = async (req: Request) => {
+const POST = async (req: Request): Promise<Response> => {
   try {
     const data = await req.json();
 
     const schema = z.object({
-      name: z.string(),
-      email: z.email(),
+      email   : z.email(),
+      name    : z.string(),
       password: z.string(),
-      role: z.enum(['USER', 'ADMIN'])
+      role    : z.enum(['USER', 'ADMIN'])
     });
 
     const param = schema.parse(data);
@@ -35,19 +36,18 @@ const POST = async (req: Request) => {
   } catch (error) {
     return Response.json({ error: error.stack }, { status: 500 });
   }
-}
+};
 
-
-const PATCH = async (req: Request) => {
+const PATCH = async (req: Request): Promise<Response> => {
   try {
     const data = await req.json();
 
     const schema = z.object({
-      id: z.cuid2(),
-      name: z.string(),
-      email: z.email(),
+      email   : z.email(),
+      id      : z.cuid2(),
+      name    : z.string(),
       password: z.string(),
-      role: z.enum(['USER', 'ADMIN'])
+      role    : z.enum(['USER', 'ADMIN'])
     });
 
     const param = schema.parse(data);
@@ -57,10 +57,9 @@ const PATCH = async (req: Request) => {
   } catch (error) {
     return Response.json({ error: error.stack }, { status: 500 });
   }
-}
+};
 
-
-const DELETE = async (req: Request) => {
+const DELETE = async (req: Request): Promise<Response> => {
   try {
     const data = await req.json();
     const schema = z.object({
@@ -76,6 +75,6 @@ const DELETE = async (req: Request) => {
   } catch (error) {
     return Response.json({ error: error.stack }, { status: 500 });
   }
-}
+};
 
-export { GET, DELETE, POST, PATCH }
+export { GET, DELETE, POST, PATCH };

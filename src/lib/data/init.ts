@@ -1,15 +1,17 @@
-import { randomUUID } from 'crypto';
+/* eslint-disable @ts/no-magic-numbers */
 
-// types.ts
+import { randomUUID } from 'crypto';
+import { EOL } from 'os';
+
 interface Todo {
+  readonly description: string
+  readonly done: boolean
+  readonly due: number
   readonly id: string
-  readonly title: string;
-  readonly description: string;
-  readonly due: number; // due is Unix Epoch
-  readonly list: string;
-  readonly tags: string[];
-  readonly stared: boolean;
-  readonly done: boolean;
+  readonly list: string
+  readonly stared: boolean
+  readonly tags: string[]
+  readonly title: string
 }
 
 // Helper function to get a random element from an array
@@ -33,7 +35,7 @@ const createRandomTodo = (index: number, nowOrTomorrow?: boolean): Todo => {
   const now = Date.now();
   const daysInMillis = 24 * 60 * 60 * 1000;
   const due = nowOrTomorrow
-    ? now + + getRandomInt(0, daysInMillis)
+    ? now + Number(getRandomInt(0, daysInMillis))
     : (now - 30 * daysInMillis) + getRandomInt(0, 90 * daysInMillis);
 
   // Select 1 to 3 random tags without duplicates
@@ -51,14 +53,14 @@ const createRandomTodo = (index: number, nowOrTomorrow?: boolean): Todo => {
   const done = (rand < 0.2) || (rand > 0.8);
 
   return {
-    id: randomUUID(),
+    done,
+    due,
+    stared,
+    tags,
     title,
     description: `This is a detailed description for the task: "${title}". It involves several steps and requires collaboration with the team.`,
-    due,
-    list: getRandomElement(lists),
-    tags,
-    stared,
-    done
+    id         : randomUUID(),
+    list       : getRandomElement(lists)
   };
 };
 
@@ -69,4 +71,4 @@ const first: Todo[] = Array.from({ length: 30 }, (_, i) => createRandomTodo(i + 
 const second: Todo[] = Array.from({ length: 70 }, (_, i) => createRandomTodo(i + 1));
 
 // Run: `node ./init.ts` to print 100 mock Todo items
-console.log(JSON.stringify([...first, ...second], null, 2));
+process.stdout.write(JSON.stringify([...first, ...second], null, 2) + EOL);

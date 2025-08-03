@@ -1,14 +1,14 @@
 import { z } from 'zod';
 
-import { createUserOTP } from '@/services/user';
-import { sendMail } from '@/services/mail';
+import { sendMail } from '@/services/mail.ts';
+import { createUserOTP } from '@/services/user.ts';
 
-const POST = async (req: Request) => {
+const POST = async (req: Request): Promise<Response> => {
   try {
     const data = await req.json();
 
     const schema = z.object({
-      email: z.email(),
+      email : z.email(),
       reason: z.string().optional()
     });
 
@@ -18,18 +18,18 @@ const POST = async (req: Request) => {
 
     if (email && otp) {
       await sendMail({
-        to: email,
         subject: 'Your OTP Code',
-        text: `Your OTP is ${otp}. It will expire in ${timeout} minutes.`,
+        text   : `Your OTP is ${otp}. It will expire in ${timeout} minutes.`,
+        to     : email
       });
 
       return Response.json(null, { status: 200 });
     }
 
-    return Response.json({ message: "OTP sent" }, { status: 200 });
+    return Response.json({ message: 'OTP sent' }, { status: 200 });
   } catch (error) {
     return Response.json({ error }, { status: 500 });
   }
-}
+};
 
-export { POST }
+export { POST };

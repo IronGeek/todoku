@@ -1,20 +1,20 @@
-import { cx } from "@/ui/utils"
-import type { ComponentProps } from "react";
+import { cx } from '@/ui/utils.ts';
 
-type TableRowProps = ComponentProps<"tr">;
+import type { ComponentProps, JSX } from 'react';
 
-const TableRow = ({ className, ...props }: TableRowProps) => {
-  return (
-    <tr
-      data-slot="table-row"
-      className={cx(
-        "hover:bg-muted/50 data-[state=selected]:bg-muted border-b transition-colors",
-        className
-      )}
-      {...props}
-    />
-  )
-}
+type TableRowProps = ComponentProps<'tr'>;
 
-export { TableRow }
-export type { TableRowProps }
+const TableRow = ({ className, ...props }: TableRowProps): JSX.Element => (
+  <tr
+    className={cx(
+      'hover:bg-muted/50 data-[state=selected]:bg-muted border-b transition-colors',
+      className
+    )}
+    data-slot="table-row"
+    {...props} />
+);
+
+TableRow.displayName = 'TableRow';
+
+export { TableRow };
+export type { TableRowProps };

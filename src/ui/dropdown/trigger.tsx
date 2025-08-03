@@ -1,16 +1,15 @@
-import { Trigger } from '@radix-ui/react-dropdown-menu'
+import { Trigger } from '@radix-ui/react-dropdown-menu';
 
-import type { ComponentProps } from 'react'
+import type { ComponentProps, JSX } from 'react';
 
 const DropdownTrigger = ({
   ...props
-}: ComponentProps<typeof Trigger>) => {
-  return (
-    <Trigger
-      data-slot="dropdown-menu-trigger"
-      {...props}
-    />
-  )
-}
+}: ComponentProps<typeof Trigger>): JSX.Element => (
+  <Trigger
+    data-slot="dropdown-menu-trigger"
+    {...props} />
+);
 
-export { DropdownTrigger }
+DropdownTrigger.displayName = 'DropdownTrigger';
+
+export { DropdownTrigger };

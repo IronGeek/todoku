@@ -1,20 +1,20 @@
-import { cx } from "@/ui/utils"
-import type { ComponentProps } from "react";
+import { cx } from '@/ui/utils.ts';
 
-type TableHeadProps = ComponentProps<"th">;
+import type { ComponentProps, JSX } from 'react';
 
-const TableHead = ({ className, ...props }: TableHeadProps) => {
-  return (
-    <th
-      data-slot="table-head"
-      className={cx(
-        "text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
-        className
-      )}
-      {...props}
-    />
-  )
-}
+type TableHeadProps = ComponentProps<'th'>;
 
-export { TableHead }
-export type { TableHeadProps }
+const TableHead = ({ className, ...props }: TableHeadProps): JSX.Element => (
+  <th
+    className={cx(
+      'text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]',
+      className
+    )}
+    data-slot="table-head"
+    {...props} />
+);
+
+TableHead.displayName = 'TableHead';
+
+export { TableHead };
+export type { TableHeadProps };

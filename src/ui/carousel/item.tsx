@@ -1,29 +1,30 @@
 'use client';
 
-import { cx } from '@/ui/utils';
-import { useCarousel } from '@/ui/carousel/provider';
+import { useCarousel } from '@/ui/carousel/provider.ts';
+import { cx } from '@/ui/utils.ts';
 
-import type { ComponentProps } from 'react';
+import type { ComponentProps, JSX } from 'react';
 
 type CarouselItemProps = ComponentProps<'div'>;
 
-function CarouselItem({ className, ...props }: CarouselItemProps) {
-  const { orientation } = useCarousel()
+const CarouselItem = ({ className, ...props }: CarouselItemProps): JSX.Element => {
+  const { orientation } = useCarousel();
 
   return (
     <div
-      role="group"
       aria-roledescription="slide"
-      data-slot="carousel-item"
       className={cx(
-        "min-w-0 shrink-0 grow-0 basis-full",
-        orientation === "horizontal" ? "pl-4" : "pt-4",
+        'min-w-0 shrink-0 grow-0 basis-full',
+        orientation === 'horizontal' ? 'pl-4' : 'pt-4',
         className
       )}
-      {...props}
-    />
-  )
-}
+      data-slot="carousel-item"
+      role="group"
+      {...props} />
+  );
+};
 
-export { CarouselItem }
-export type { CarouselItemProps }
+CarouselItem.displayName = 'CarouselItem';
+
+export { CarouselItem };
+export type { CarouselItemProps };

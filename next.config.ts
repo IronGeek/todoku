@@ -2,40 +2,40 @@ import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
   cleanDistDir: true,
-  distDir: 'dist',
-  sassOptions: {
+  distDir     : 'dist',
+  sassOptions : {
     implementation: 'sass-embedded'
   },
   webpack: (config) => {
-    const svgLoader = config.module.rules.find((rule) =>
-      rule.test?.test?.('.svg')
-    );
+    const svgLoader = config.module.rules.find((rule) => rule.test?.test?.('.svg'));
 
     config.module.rules.push(
       {
         ...svgLoader,
-        test: /\.svg$/i,
-        resourceQuery: { and: [/url/, { not: svgLoader.resourceQuery.not } ] }
+        resourceQuery: { and: [/url/u, { not: svgLoader.resourceQuery.not }]},
+        test         : /\.svg$/iu
       },
       {
-        test: /\.svg$/i,
-        issuer: svgLoader.issuer,
-        resourceQuery: { not: [/url/, ...svgLoader.resourceQuery.not] },
-        use: [{
-          loader: '@svgr/webpack',
-          options: {
-            icon: true,
-            title: true,
-            replaceAttrValues: {
-              currentColor: `{props.color || 'currentColor'}`,
-              '1em': `{props.size ?? '1em'}`
+        issuer       : svgLoader.issuer,
+        resourceQuery: { not: [/url/u, ...svgLoader.resourceQuery.not]},
+        test         : /\.svg$/iu,
+        use          : [
+          {
+            loader : '@svgr/webpack',
+            options: {
+              icon             : true,
+              replaceAttrValues: {
+                '1em'       : `{props.size ?? '1em'}`,
+                currentColor: `{props.color || 'currentColor'}`
+              },
+              title: true
             }
           }
-        }],
-      },
-    )
+        ]
+      }
+    );
 
-    svgLoader.exclude = /\.svg$/i;
+    svgLoader.exclude = /\.svg$/iu;
 
     return config;
   }

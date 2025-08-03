@@ -1,6 +1,7 @@
-import NextAuth, { CredentialsSignin, Role } from 'next-auth';
+import NextAuth, { CredentialsSignin } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
+import type { Role } from 'next-auth';
 
 class CredentialsError extends CredentialsSignin {
   constructor(error?: Error) {
@@ -10,23 +11,40 @@ class CredentialsError extends CredentialsSignin {
   }
 }
 
-export const { auth, handlers, signIn, signOut } = NextAuth({
+const { auth, handlers, signIn, signOut } = NextAuth({
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
+        token.role = user.role;
+      }
+
+      return token;
+    },
+    async session({ session, token }) {
+      if (token.id) {
+        session.user.id = token.id as string;
+      }
+
+      if (token.role) {
+        session.user.role = token.role as Role;
+      }
+
+      return session;
+    }
+  },
+  pages    : { signIn: '/signin' },
   providers: [
     CredentialsProvider({
-      name: "Credentials",
-      credentials: {
-        email: { label: "Email", type: "text" },
-        password: { label: "Password", type: "password" },
-      },
       async authorize(credentials, req) {
         const apiRouteUrl = new URL('/api/auth/verify-password', req.url).toString();
 
         const response = await fetch(apiRouteUrl, {
-          method: 'POST',
+          body   : JSON.stringify({ credentials }),
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ credentials })
+          method: 'POST'
         });
 
         if (response.ok) {
@@ -35,45 +53,34 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
 
         throw new CredentialsError();
       },
-    }),
+      credentials: {
+        email   : { label: 'Email', type: 'text' },
+        password: { label: 'Password', type: 'password' }
+      },
+      name: 'Credentials'
+    })
   ],
-  callbacks: {
-    async jwt({ token, user, account, profile }) {
-      if (user) {
-        token.id = user.id;
-        token.role = user.role;
-      }
-      return token;
-    },
-    async session({ session, token }) {
-      if (token.id) {
-        session.user.id = token.id;
-      }
-      if (token.role) {
-        session.user.role = token.role;
-      }
-      return session;
-    }
-  },
-  session: { strategy: "jwt" },
-  pages: { signIn: "/signin" },
-  secret: process.env.NEXTAUTH_SECRET,
+  secret : process.env.NEXTAUTH_SECRET,
+  session: { strategy: 'jwt' }
 });
 
-export interface Route {
+interface Route {
   pattern: string | RegExp
   roles: Role[]
 }
 
-export const protectedRoutes: Route[] = [
+const protectedRoutes: Route[] = [
   {
     // /home, /today, /upcoming, /done, /pin, /archive, and /l/*
     pattern: /^\/(?:home|today|upcoming|done|pin|archive|l\/.*?)$/u,
-    roles: ['USER', 'ADMIN']
+    roles  : ['USER', 'ADMIN']
   },
   {
-    // all routes under /dashboard
+    // All routes under /dashboard
     pattern: /^\/dashboard/u,
-    roles: ['ADMIN']
+    roles  : ['ADMIN']
   }
-]
+];
+
+export { auth, handlers, signIn, signOut, protectedRoutes };
+export type { Route };

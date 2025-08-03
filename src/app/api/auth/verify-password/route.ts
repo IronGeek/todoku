@@ -1,13 +1,13 @@
 import { z } from 'zod';
 
-import { verifyUserPassword } from '@/services/user';
+import { verifyUserPassword } from '@/services/user.ts';
 
-const POST = async (req: Request) => {
+const POST = async (req: Request): Promise<Response> => {
   const { credentials } = await req.json();
 
   const schema = z.object({
-    email: z.email(),
-    password: z.string().min(6),
+    email   : z.email(),
+    password: z.string().min(6)
   });
 
   const { email, password } = schema.parse(credentials);
@@ -17,12 +17,6 @@ const POST = async (req: Request) => {
   if (!user.verifiedAt) { return Response.json({ error: 'Unverified user' }, { status: 401 }) }
 
   return Response.json(user, { status: 200 });
-}
+};
 
-
-export { POST }
-
-
-
-
-
+export { POST };

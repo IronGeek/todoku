@@ -1,32 +1,35 @@
-import { cx } from '@/ui/utils';
-
-import type { ComponentProps, MouseEvent } from 'react';
-import type { Todo } from '@/state/todo/types';
+import { cx } from '@/ui/utils.ts';
 
 import styles from './button.module.scss';
 
-type TodoButtonProps = Omit<ComponentProps<'button'>, 'value'> & {
-  value: Todo
-  action?: (todo: Todo) => void
-}
+import type { ComponentProps, JSX, MouseEvent } from 'react';
 
-const TodoButton = ({ className, children, action, value, ...props }: TodoButtonProps) => {
-  const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
+import type { Todo } from '@/state/todo/types';
+
+type TodoButtonProps = Omit<ComponentProps<'button'>, 'value'> & {
+  readonly action?: (todo: Todo) => void
+  readonly value: Todo
+};
+
+const TodoButton = ({ className, children, action, value, ...props }: TodoButtonProps): JSX.Element => {
+  const handleClick = (e: MouseEvent<HTMLButtonElement>): void => {
     e.preventDefault();
 
     action?.(value);
-  }
+  };
 
   return (
     <button
       {...props}
+      className={cx(styles.button, 'button todo-item-button', className)}
       type="button"
-      className={cx(styles.button, "button todo-item-button", className)}
       onClick={handleClick}
     >
       {children}
     </button>
-  )
+  );
 };
+
+TodoButton.displayName = 'TodoButton';
 
 export { TodoButton };

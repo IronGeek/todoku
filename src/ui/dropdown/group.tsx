@@ -1,13 +1,11 @@
-import { Group } from '@radix-ui/react-dropdown-menu'
+import { Group } from '@radix-ui/react-dropdown-menu';
 
-import type { ComponentProps } from 'react'
+import type { ComponentProps, JSX } from 'react';
 
 const DropdownGroup = ({
   ...props
-}: ComponentProps<typeof Group>) => {
-  return (
-    <Group data-slot="dropdown-menu-group" {...props} />
-  )
-}
+}: ComponentProps<typeof Group>): JSX.Element => <Group data-slot="dropdown-menu-group" {...props} />;
 
-export { DropdownGroup }
+DropdownGroup.displayName = 'DropdownGroup';
+
+export { DropdownGroup };

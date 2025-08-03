@@ -1,17 +1,17 @@
-import { cx } from "@/ui/utils"
-import type { ComponentProps } from "react";
+import { cx } from '@/ui/utils.ts';
 
-type TableBodyProps = ComponentProps<"tbody">;
+import type { ComponentProps, JSX } from 'react';
 
-const TableBody = ({ className, ...props }: TableBodyProps) => {
-  return (
-    <tbody
-      data-slot="table-body"
-      className={cx("[&_tr:last-child]:border-0", className)}
-      {...props}
-    />
-  )
-}
+type TableBodyProps = ComponentProps<'tbody'>;
 
-export { TableBody }
-export type { TableBodyProps }
+const TableBody = ({ className, ...props }: TableBodyProps): JSX.Element => (
+  <tbody
+    className={cx('[&_tr:last-child]:border-0', className)}
+    data-slot="table-body"
+    {...props} />
+);
+
+TableBody.displayName = 'TableBody';
+
+export { TableBody };
+export type { TableBodyProps };

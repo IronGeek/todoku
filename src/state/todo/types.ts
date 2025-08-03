@@ -1,19 +1,19 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 
-type Writable<T> = { -readonly [P in keyof T]: T[P] };
+type Writable<T> = {-readonly [P in keyof T]: T[P] };
 
 type TodoCutoff = 'past' | 'today' | 'tomorrow' | 'this-week' | 'later';
-type TodoCategory = 'all' | 'upcoming' | 'today' | 'done' |'pin' | 'archive';
+type TodoCategory = 'all' | 'upcoming' | 'today' | 'done' | 'pin' | 'archive';
 
 interface Todo {
-  readonly id: string
-  readonly title: string
   readonly description: string
-  readonly due: number
-  readonly list: string
-  readonly tags: string[]
-  readonly stared: boolean
   readonly done: boolean
+  readonly due: number
+  readonly id: string
+  readonly list: string
+  readonly stared: boolean
+  readonly tags: string[]
+  readonly title: string
 }
 
 type GroupedTodos = Record<TodoCutoff, Todo[]>;
@@ -25,9 +25,9 @@ type TodoSummary = Record<TodoCategory, [number, number]> & {
 };
 
 interface Todos {
-  readonly title: string
   readonly items: Todo[]
   readonly summary: TodoSummary
+  readonly title: string
 }
 
 type SetTodosAction = PayloadAction<{
@@ -43,8 +43,8 @@ type SetSummaryAction = PayloadAction<{
 }>;
 
 type SetCompletedAction = PayloadAction<{
-  readonly id: string
   readonly completed: boolean
+  readonly id: string
 }>;
 
 type SetPinnedAction = PayloadAction<{

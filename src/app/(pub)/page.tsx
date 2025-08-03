@@ -1,23 +1,26 @@
 'use client';
 
-import { Intro } from '@/components/intro';
-import { Main } from '@/components/main';
-import { CustomersSection } from '@/components/customers-section';
-import { FeaturesSection } from '@/components/features-section';
-import { ShowcaseSection } from '@/components/showcase-section';
-import { BenefitsSection } from '@/components/benefits-section';
-import { TestimoniesSection } from '@/components/testimonies-section';
-import { PricingSection } from '@/components/pricing-section';
-import { FooterSection } from '@/components/footer-section';
-import { LandingNavbar } from '@/components/landing-navbar';
-import { cx } from '@/ui/utils';
+import { BenefitsSection } from '@/components/benefits-section.tsx';
+import { CustomersSection } from '@/components/customers-section.tsx';
+import { FeaturesSection } from '@/components/features-section.tsx';
+import { FooterSection } from '@/components/footer-section.tsx';
+import { Intro } from '@/components/intro.tsx';
+import { LandingNavbar } from '@/components/landing-navbar.tsx';
+import { Main } from '@/components/main.tsx';
+import { PricingSection } from '@/components/pricing-section.tsx';
+import { ShowcaseSection } from '@/components/showcase-section.tsx';
+import { TestimoniesSection } from '@/components/testimonies-section.tsx';
+import { cx } from '@/ui/utils.ts';
 
 import styles from './page.module.css';
 
-const Page = () => (
+import type { JSX } from 'react';
+
+const Page = (): JSX.Element => (
   <>
     <LandingNavbar />
-    <Main className={cx(styles.main, "fullscreen")}>
+
+    <Main className={cx(styles.main, 'fullscreen')}>
       <Intro />
       <CustomersSection />
       <FeaturesSection />
@@ -29,5 +32,7 @@ const Page = () => (
     </Main>
   </>
 );
+
+Page.displayName = 'Page';
 
 export default Page;

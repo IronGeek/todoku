@@ -1,27 +1,24 @@
-import { cx } from '@/ui/utils';
-
-import { type ComponentProps, createElement, isValidElement, type ReactNode } from 'react';
+import { cx } from '@/ui/utils.ts';
 
 import styles from './main.module.scss';
 
-type MainProps = Omit<ComponentProps<'div'>, 'title'> & {
+import type { ComponentProps, ReactNode } from 'react';
+
+type MainProps = ComponentProps<'main'> & {
   readonly fullscreen?: boolean
-  readonly title?: ReactNode
-  readonly actions?: ReactNode
 };
 
-const Main = ({ className, children, fullscreen, title, actions, ...props }: MainProps): ReactNode => (
+const Main = ({
+  className,
+  children,
+  fullscreen,
+  ...props
+}: MainProps): ReactNode => (
   <main {...props} className={cx(styles.main, { fullscreen }, className)}>
-    <div className="main-toolbar">
-      { isValidElement(title) ? title : title ? <h1 className="main-title">{title}</h1> : null }
-      { isValidElement<ComponentProps<'div'>>(actions)
-        ? createElement(actions.type, { ...actions.props, className: cx("main-actions", actions.props.className) })
-        : actions
-          ? <div className="main-actions">{actions}</div>
-          : null }
-    </div>
     {children}
   </main>
 );
+
+Main.displayName = 'Main';
 
 export { Main };

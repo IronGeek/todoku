@@ -1,17 +1,17 @@
-import { cx } from "@/ui/utils"
-import type { ComponentProps } from "react";
+import { cx } from '@/ui/utils.ts';
 
-type TableHeaderProps = ComponentProps<"thead">;
+import type { ComponentProps, JSX } from 'react';
 
-const TableHeader = ({ className, ...props }: TableHeaderProps) => {
-  return (
-    <thead
-      data-slot="table-header"
-      className={cx("[&_tr]:border-b", className)}
-      {...props}
-    />
-  )
-}
+type TableHeaderProps = ComponentProps<'thead'>;
 
-export { TableHeader }
-export type { TableHeaderProps }
+const TableHeader = ({ className, ...props }: TableHeaderProps): JSX.Element => (
+  <thead
+    className={cx('[&_tr]:border-b', className)}
+    data-slot="table-header"
+    {...props} />
+);
+
+TableHeader.displayName = 'TableHeader';
+
+export { TableHeader };
+export type { TableHeaderProps };

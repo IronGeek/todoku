@@ -1,16 +1,16 @@
 import { z } from 'zod';
 
-import { createUser } from '@/services/user';
-import { sendMail } from '@/services/mail';
+import { sendMail } from '@/services/mail.ts';
+import { createUser } from '@/services/user.ts';
 
-const POST = async (req: Request) => {
+const POST = async (req: Request): Promise<Response> => {
   try {
     const data = await req.json();
 
     const schema = z.object({
-      email: z.email(),
-      password: z.string().min(6),
-      name: z.string(),
+      email   : z.email(),
+      name    : z.string(),
+      password: z.string().min(6)
     });
 
     const { email, password, name } = schema.parse(data);
@@ -19,9 +19,9 @@ const POST = async (req: Request) => {
 
     if (user && otp) {
       await sendMail({
-        to: email,
         subject: 'Your OTP Code',
-        text: `Your OTP is ${otp}. It will expire in ${timeout} minutes.`,
+        text   : `Your OTP is ${otp}. It will expire in ${timeout} minutes.`,
+        to     : email
       });
 
       return Response.json({ user }, { status: 201 });
@@ -31,6 +31,6 @@ const POST = async (req: Request) => {
   } catch (err) {
     return Response.json({ error: err.message }, { status: 500 });
   }
-}
+};
 
-export { POST }
+export { POST };

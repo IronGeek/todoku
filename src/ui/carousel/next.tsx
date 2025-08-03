@@ -1,41 +1,43 @@
-import { ComponentProps } from 'react';
+import { useCarousel } from '@/ui/carousel/provider.ts';
+import { Button } from '@/ui/forms/button.tsx';
+import { ChevronRightIcon } from '@/ui/icons.ts';
+import { cx } from '@/ui/utils.ts';
 
-import { Button } from '@/ui/forms/button';
-import { ChevronRightIcon } from '@/ui//icons';
-import { useCarousel } from '@/ui/carousel/provider';
-import { cx } from '@/ui/utils';
+import type { ComponentProps, JSX } from 'react';
 
 type CarouselNextProps = ComponentProps<typeof Button>;
 
 const CarouselNext = ({
   className,
-  variant = "outline",
-  size = "icon",
+  variant = 'outline',
+  size = 'icon',
   ...props
-}: CarouselNextProps) => {
+}: CarouselNextProps): JSX.Element => {
   const { orientation, scrollNext, canScrollNext } = useCarousel();
 
   return (
     <Button
-      data-slot="carousel-next"
-      variant={variant}
-      size={size}
       className={cx(
-        "absolute size-8 rounded-full",
-        orientation === "horizontal"
-          ? "top-1/2 -right-12 -translate-y-1/2"
-          : "-bottom-12 left-1/2 -translate-x-1/2 rotate-90",
+        'absolute size-8 rounded-full',
+        orientation === 'horizontal'
+          ? 'top-1/2 -right-12 -translate-y-1/2'
+          : '-bottom-12 left-1/2 -translate-x-1/2 rotate-90',
         className
       )}
+      data-slot="carousel-next"
       disabled={!canScrollNext}
+      size={size}
+      variant={variant}
       onClick={scrollNext}
       {...props}
     >
       <ChevronRightIcon />
       <span className="sr-only">Next</span>
     </Button>
-  )
-}
+  );
+};
 
-export { CarouselNext }
-export type { CarouselNextProps }
+CarouselNext.displayName = 'CarouselNext';
+
+export { CarouselNext };
+export type { CarouselNextProps };

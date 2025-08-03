@@ -1,8 +1,10 @@
-import { UserLayout } from '@/components/user-layout';
-import { getTodos } from '@/services/todo';
-import { AppStateUpdater } from '@/state/updater';
+import { UserLayout } from '@/components/user-layout.tsx';
+import { getTodos } from '@/services/todo.ts';
+import { AppStateUpdater } from '@/state/updater.ts';
 
-const RootLayout = async ({ children }) => {
+import type { JSX, PropsWithChildren } from 'react';
+
+const RootLayout = async ({ children }: PropsWithChildren): Promise<JSX.Element> => {
   const todos = await getTodos();
 
   return (
@@ -13,5 +15,7 @@ const RootLayout = async ({ children }) => {
     </UserLayout>
   );
 };
+
+RootLayout.displayName = 'RootLayout';
 
 export default RootLayout;

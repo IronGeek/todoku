@@ -1,11 +1,11 @@
-import { Sub } from '@radix-ui/react-dropdown-menu'
+import { Sub } from '@radix-ui/react-dropdown-menu';
 
-import type { ComponentProps } from 'react'
+import type { ComponentProps, JSX } from 'react';
 
 const DropdownSub = ({
   ...props
-}: ComponentProps<typeof Sub>) => {
-  return <Sub data-slot="dropdown-menu-sub" {...props} />
-}
+}: ComponentProps<typeof Sub>): JSX.Element => <Sub data-slot="dropdown-menu-sub" {...props} />;
 
-export { DropdownSub }
+DropdownSub.displayName = 'DropdownSub';
+
+export { DropdownSub };
