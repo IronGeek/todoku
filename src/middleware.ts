@@ -1,11 +1,11 @@
 import { isFuture } from 'date-fns';
 import { NextResponse } from 'next/server';
 
-import { auth, protectedRoutes } from '@/auth.config.ts';
+import { auth, protectedRoutes } from '@/auth.ts';
 
 import type { NextAuthRequest, Session } from 'next-auth';
 
-import type { Route } from '@/auth.config';
+import type { Route } from '@/auth';
 
 const getMatchedRoute = (path: string): Route => protectedRoutes.find((route) => (route.pattern instanceof RegExp ? route.pattern.test(path) : route.pattern === path));
 
