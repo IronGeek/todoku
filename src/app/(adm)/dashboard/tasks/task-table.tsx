@@ -18,7 +18,7 @@ import type { JSX } from 'react';
 import type { Task } from '@/lib/prisma/client.ts';
 
 interface TaskTableProps {
-  readonly data: User[]
+  readonly data: Task[]
   readonly session: Session
 }
 
